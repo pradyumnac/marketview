@@ -5,11 +5,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
-func fetchBSE(csvFilePath string) {
+func fetchBSE() []Scrip {
 	url := "https://api.bseindia.com/BseIndiaAPI/api/ListofScripData/w?Group=&Scripcode=&industry=&segment=Equity&status=Active"
 
 	spaceClient := http.Client{
@@ -40,16 +39,15 @@ func fetchBSE(csvFilePath string) {
 	// fmt.Println(string(body))
 
 	// scrips := []scrip{}
-	var scrips []scrip
+	var scrips []Scrip
 	jsonErr := json.Unmarshal([]byte(body), &scrips)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
 	}
-
-	structToCSV(scrips, csvFilePath)
+	return scrips
 }
 
-func fetchNSE(csvFilePath string) {
+func fetchNSE() []byte {
 	url := "https://www1.nseindia.com/content/equities/EQUITY_L.csv"
 
 	spaceClient := http.Client{
@@ -76,19 +74,13 @@ func fetchNSE(csvFilePath string) {
 	if readErr != nil {
 		log.Fatal(readErr)
 	}
-
-	f, err := os.Create(csvFilePath)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer f.Close()
-
-	_, err = f.Write(body)
-	f.Sync()
+	return body
 }
 
 func main() {
-	fetchBSE("../data/symbols/bse.csv")
-	fetchNSE("../data/symbols/nse.csv")
+	scrips := fetchBSE()
+	structToCSV(scrips, "../data/symbols/bse.csv")
+
+	csvString := fetchNSE()
+	saveCsv(csvString, "../data/symbols/bse.csv")
 }

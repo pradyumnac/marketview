@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-type scrip struct {
+type Scrip struct {
 	SCRIP_CD    string
 	Scrip_Name  string
 	Status      string
@@ -21,7 +21,7 @@ type scrip struct {
 	Mktcap      string
 }
 
-func structToCSV(scrips []scrip, csvFilePath string) {
+func structToCSV(scrips []Scrip, csvFilePath string) {
 	f, err := os.Create(csvFilePath)
 	if err != nil {
 		log.Fatal(err)
@@ -42,5 +42,17 @@ func structToCSV(scrips []scrip, csvFilePath string) {
 		}
 	}
 
+	f.Sync()
+}
+
+func saveCsv(csvData []byte, csvFilePath string) {
+	f, err := os.Create(csvFilePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer f.Close()
+
+	_, err = f.Write(csvData)
 	f.Sync()
 }
