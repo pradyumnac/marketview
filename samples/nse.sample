@@ -27,16 +27,21 @@ var FETCHINTERVAL = 15
 // LINKLANDING -  Referrer page to get cookie for ultimate grab
 var LINKLANDING string = "https://www.nseindia.com/market-data/live-equity-market"
 
-var linkN50 string  = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050"
-var linkNN50 string = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%20NEXT%2050"
-var linkM400 string = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%20MIDSMALLCAP%20400"
-var linkN100 string = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%20100"
+var (
+    linkN50 string  = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%2050"
+    linkNN50 string = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%20NEXT%2050"
+    linkM400 string = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%20MIDSMALLCAP%20400"
+    linkN100 string = "https://www.nseindia.com/api/equity-stockIndices?index=NIFTY%20100"
+)
 
 // GRABLINKS - Default NSE Links to be grabbed
-var GRABLINKS = [2]string{linkM400, linkN100}
+var GRABLINKS = [2]string{
+    linkM400,
+    linkN100}
 
 // GRABLINKNAMES - Default NSE Grablinks Names
-var GRABLINKNAMES = [2]string{"M400","N100"}
+    var GRABLINKNAMES = [2]string{"M400","N100"
+}
 
 //var GRABLINKNAMES = [4]string{"N50","NN50","N100", "M400"}
 
@@ -49,6 +54,7 @@ type NSEWatchlist struct {
 		Unchanged string `json:"unchanged"`
 	} `json:"advance"`
 	Timestamp string `json:"timestamp"`
+
 	Data      []struct {
 		Priority          int     `json:"priority"`
 		Symbol            string  `json:"symbol"`
