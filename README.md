@@ -9,11 +9,12 @@ View end of day market data in a easily reabale format in the terminal and web b
 	Accesible at [Marketview](pradyumnac.github.io/marketview)
 2. cli/ contains code that can bebuilt as a terminal application
 3. fetcher/ contains code that fetches 
-4. dump/ contains files fetched from publicly available data that is used to show
+4. data/ contains files fetched from publicly available data that is used to show
 	to the user
 	1. eod - end of market data for scrips and indices
 	2. mf - end of market data for mutual funds
 	3. vix - end of day volatility data
+	Refer to this []file](data/readme.md) to understand directory strycture
 
 ## Scope  
 1. This project will only show EOD data. Nothing intraday for trading purposes
