@@ -21,7 +21,7 @@ type Scrip struct {
 	Mktcap      string
 }
 
-func structToCSV(scrips []Scrip, csvFilePath string) {
+func StructToCSV(scrips []Scrip, csvFilePath string) {
 	f, err := os.Create(csvFilePath)
 	if err != nil {
 		log.Fatal(err)
@@ -45,7 +45,7 @@ func structToCSV(scrips []Scrip, csvFilePath string) {
 	f.Sync()
 }
 
-func saveCsv(csvData []byte, csvFilePath string) {
+func SaveCsv(csvData []byte, csvFilePath string) {
 	f, err := os.Create(csvFilePath)
 	if err != nil {
 		log.Fatal(err)

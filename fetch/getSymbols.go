@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func fetchBSE() []Scrip {
+func FetchBSE() []Scrip {
 	url := "https://api.bseindia.com/BseIndiaAPI/api/ListofScripData/w?Group=&Scripcode=&industry=&segment=Equity&status=Active"
 
 	spaceClient := http.Client{
@@ -47,7 +47,7 @@ func fetchBSE() []Scrip {
 	return scrips
 }
 
-func fetchNSE() []byte {
+func FetchNSE() []byte {
 	url := "https://www1.nseindia.com/content/equities/EQUITY_L.csv"
 
 	spaceClient := http.Client{
@@ -77,10 +77,10 @@ func fetchNSE() []byte {
 	return body
 }
 
-func main() {
-	scrips := fetchBSE()
-	structToCSV(scrips, "../data/symbols/bse.csv")
+// func main() {
+// 	scrips := fetchBSE()
+// 	structToCSV(scrips, "../data/symbols/bse.csv")
 
-	csvString := fetchNSE()
-	saveCsv(csvString, "../data/symbols/bse.csv")
-}
+// 	csvString := fetchNSE()
+// 	saveCsv(csvString, "../data/symbols/bse.csv")
+// }
