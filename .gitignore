@@ -4,6 +4,7 @@
 # data files
 *.csv
 # Binaries for programs and plugins
+marketview
 *.exe
 *.exe~
 *.dll
