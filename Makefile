@@ -1,10 +1,10 @@
-INSTALL_PREFIX := ~/.local/bin
+.PHONY: all
+INSTALL_PREFIX := $${HOME}/.local/bin
 
-.PHONY all
 all: clean build install
 
 clean:
-	@rm -f marketview ~/$(INSTALL_PREFIX)/marketview
+	@rm -f marketview $(INSTALL_PREFIX)/marketview
 	@echo "Clean Done"
 
 build:
@@ -12,5 +12,5 @@ build:
 	@echo "Build Done"
 
 install: 
-	mv marketview ~/$(INSTALL_PREFIX)/marketview
+	@mv marketview $(INSTALL_PREFIX)/marketview
 	@echo "Install Done"
