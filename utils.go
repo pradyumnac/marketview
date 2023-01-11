@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"log"
 	"os"
 	"path"
 	"path/filepath"
-	"strings"
+
+	"github.com/dnlo/struct2csv"
 )
 
 func GetConfig() (string, string) {
@@ -22,31 +24,27 @@ func GetConfig() (string, string) {
 	return CONFIG_DIR, DATA_DIR
 }
 
-func StructToCSV(scrips []NseScrip, csvFilePath string) {
-	f, err := os.Create(csvFilePath)
+func SaveNseSymbolstoCsv(symbols []NseSymbol, csvFilePath string) {
+	buff := &bytes.Buffer{}
+	w := struct2csv.NewWriter(buff)
+	err := w.WriteStructs(symbols)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Unable to create csv for NSE Symbols")
 	}
-
-	defer f.Close()
-
-	// _, err = f.WriteString("SCRIP_CD, Scrip_Name, Status, GROUP, FACE_VALUE, ISIN_NUMBER, INDUSTRY, Scrip_id, Segment, NSURL, Issuer_Name,  Mktcap\r\n")
-	_, err = f.WriteString("Scrip_id, SCRIP_CD, ISIN_NUMBER, Scrip_Name, NSURL, INDUSTRY, GROUP, FACE_VALUE,  Issuer_Name,  Mktcap\r\n")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for _, sym := range scrips {
-		f.WriteString(sym.Scrip_id + ", " + sym.SCRIP_CD + ", " + sym.ISIN_NUMBER + ", " + sym.Scrip_Name + ", " + sym.NSURL + ", " + sym.INDUSTRY + ", " + sym.GROUP + ", " + sym.FACE_VALUE + ", " + strings.Replace(sym.Issuer_Name, ",", "", -1) + ", " + sym.Mktcap + "\r\n")
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	f.Sync()
+	SaveBytesCsv(buff.Bytes(), csvFilePath)
 }
 
-func SaveCsv(csvData []byte, csvFilePath string) {
+func SaveBseSymbolstoCsv(symbols []BseSymbol, csvFilePath string) {
+	buff := &bytes.Buffer{}
+	w := struct2csv.NewWriter(buff)
+	err := w.WriteStructs(symbols)
+	if err != nil {
+		log.Fatalf("Unable to create csv for BSE Symbols")
+	}
+	SaveBytesCsv(buff.Bytes(), csvFilePath)
+}
+
+func SaveBytesCsv(csvAsBytes []byte, csvFilePath string) {
 	f, err := os.Create(csvFilePath)
 	if err != nil {
 		log.Fatal(err)
@@ -54,6 +52,6 @@ func SaveCsv(csvData []byte, csvFilePath string) {
 
 	defer f.Close()
 
-	_, err = f.Write(csvData)
+	_, err = f.Write(csvAsBytes)
 	f.Sync()
 }

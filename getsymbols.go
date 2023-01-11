@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"path"
 	"time"
 
 	"github.com/gocarina/gocsv"
@@ -20,7 +21,7 @@ var (
 	DATA_DIR   string
 )
 
-type BseScrip struct {
+type BseSymbol struct {
 	SCRIP_CD    string
 	Scrip_Name  string
 	Status      string
@@ -35,7 +36,7 @@ type BseScrip struct {
 	Mktcap      string
 }
 
-type NseScrip struct {
+type NseSymbol struct {
 	SCRIP_CD    string `csv:"SYMBOL"`
 	Scrip_Name  string `csv:"NAME OF COMPANY"`
 	Status      string `csv:""`
@@ -50,9 +51,7 @@ type NseScrip struct {
 	Mktcap      string `csv:""`
 }
 
-func FetchBSE() []BseScrip {
-	url := "https://api.bseindia.com/BseIndiaAPI/api/ListofScripData/w?Group=&Scripcode=&industry=&segment=Equity&status=Active"
-
+func FetchRes(url string) []byte {
 	spaceClient := http.Client{
 		Timeout: time.Second * 5,
 	}
@@ -73,51 +72,48 @@ func FetchBSE() []BseScrip {
 		defer res.Body.Close()
 	}
 
-	body, readErr := ioutil.ReadAll(res.Body)
+	resp, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
 		log.Fatal(readErr)
 	}
 
-	var scrips []BseScrip
-	jsonErr := json.Unmarshal([]byte(body), &scrips)
+	// response in []byte
+	return resp
+}
+
+func FetchBseSymbols() []BseSymbol {
+	url := "https://api.bseindia.com/BseIndiaAPI/api/ListofScripData/w?Group=&Scripcode=&industry=&segment=Equity&status=Active"
+
+	resp := FetchRes(url)
+	var scrips []BseSymbol
+	jsonErr := json.Unmarshal(resp, &scrips)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
+	}
+
+	return scrips
+}
+
+func FetchNseSymbols() []NseSymbol {
+	url := "https://www1.nseindia.com/content/equities/EQUITY_L.csv"
+
+	resp := FetchRes(url)
+	var scrips []NseSymbol
+	if err := gocsv.UnmarshalBytes(resp, &scrips); err != nil { // Load clients from file
+		panic(err)
 	}
 	return scrips
 }
 
-func FetchNSE() []NseScrip {
-	url := "https://www1.nseindia.com/content/equities/EQUITY_L.csv"
+// Fetches both bse && nse symbols from respective servers
+// Saves this data ascsv file in symbols_data_dir
+func getSymbols(symbols_data_dir string) ([]BseSymbol, []NseSymbol) {
+	symbols_bse := FetchBseSymbols()
+	bse_symbols_filepath := path.Join(symbols_data_dir, "bse.csv")
+	SaveBseSymbolstoCsv(symbols_bse, bse_symbols_filepath)
 
-	spaceClient := http.Client{
-		Timeout: time.Second * 5,
-	}
-
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	req.Header.Set("User-Agent", _USERAGENT_STRING)
-
-	res, getErr := spaceClient.Do(req)
-	if getErr != nil {
-		log.Fatal(getErr)
-	}
-
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
-
-	// body, readErr := ioutil.ReadAll(res.Body)
-	// if readErr != nil {
-	// 	log.Fatal(readErr)
-	// }
-
-	var scrips []NseScrip
-	if err := gocsv.Unmarshal(res.Body, &scrips); err != nil { // Load clients from file
-		panic(err)
-	}
-
-	return scrips
+	symbols_nse := FetchNseSymbols()
+	nse_symbols_filepath := path.Join(symbols_data_dir, "bse.csv")
+	SaveNseSymbolstoCsv(symbols_nse, nse_symbols_filepath)
+	return symbols_bse, symbols_nse
 }
