@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gocarina/gocsv"
 )
 
 // User agent string sent with headers for performing requests
@@ -18,7 +20,7 @@ var (
 	DATA_DIR   string
 )
 
-type Scrip struct {
+type BseScrip struct {
 	SCRIP_CD    string
 	Scrip_Name  string
 	Status      string
@@ -33,11 +35,26 @@ type Scrip struct {
 	Mktcap      string
 }
 
-func FetchBSE() []Scrip {
+type NseScrip struct {
+	SCRIP_CD    string `csv:"SYMBOL"`
+	Scrip_Name  string `csv:"NAME OF COMPANY"`
+	Status      string `csv:""`
+	GROUP       string `csv:""`
+	FACE_VALUE  string `csv:""`
+	ISIN_NUMBER string `csv:"ISIN NUMBER"`
+	INDUSTRY    string `csv:""`
+	Scrip_id    string `csv:""`
+	Segment     string `csv:""`
+	NSURL       string `csv:""`
+	Issuer_Name string `csv:""`
+	Mktcap      string `csv:""`
+}
+
+func FetchBSE() []BseScrip {
 	url := "https://api.bseindia.com/BseIndiaAPI/api/ListofScripData/w?Group=&Scripcode=&industry=&segment=Equity&status=Active"
 
 	spaceClient := http.Client{
-		Timeout: time.Second * 2, // Timeout after 2 seconds
+		Timeout: time.Second * 5,
 	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -61,7 +78,7 @@ func FetchBSE() []Scrip {
 		log.Fatal(readErr)
 	}
 
-	var scrips []Scrip
+	var scrips []BseScrip
 	jsonErr := json.Unmarshal([]byte(body), &scrips)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
@@ -69,11 +86,11 @@ func FetchBSE() []Scrip {
 	return scrips
 }
 
-func FetchNSE() []Scrip {
+func FetchNSE() []NseScrip {
 	url := "https://www1.nseindia.com/content/equities/EQUITY_L.csv"
 
 	spaceClient := http.Client{
-		Timeout: time.Second * 2, // Timeout after 2 seconds
+		Timeout: time.Second * 5,
 	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -92,15 +109,15 @@ func FetchNSE() []Scrip {
 		defer res.Body.Close()
 	}
 
-	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
+	// body, readErr := ioutil.ReadAll(res.Body)
+	// if readErr != nil {
+	// 	log.Fatal(readErr)
+	// }
+
+	var scrips []NseScrip
+	if err := gocsv.Unmarshal(res.Body, &scrips); err != nil { // Load clients from file
+		panic(err)
 	}
 
-	var scrips []Scrip
-	jsonErr := json.Unmarshal([]byte(body), &scrips)
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
-	}
 	return scrips
 }

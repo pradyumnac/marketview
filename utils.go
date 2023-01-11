@@ -22,7 +22,7 @@ func GetConfig() (string, string) {
 	return CONFIG_DIR, DATA_DIR
 }
 
-func StructToCSV(scrips []Scrip, csvFilePath string) {
+func StructToCSV(scrips []NseScrip, csvFilePath string) {
 	f, err := os.Create(csvFilePath)
 	if err != nil {
 		log.Fatal(err)
