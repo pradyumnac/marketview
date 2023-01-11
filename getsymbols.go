@@ -113,7 +113,7 @@ func getSymbols(symbols_data_dir string) ([]BseSymbol, []NseSymbol) {
 	SaveBseSymbolstoCsv(symbols_bse, bse_symbols_filepath)
 
 	symbols_nse := FetchNseSymbols()
-	nse_symbols_filepath := path.Join(symbols_data_dir, "bse.csv")
+	nse_symbols_filepath := path.Join(symbols_data_dir, "nse.csv")
 	SaveNseSymbolstoCsv(symbols_nse, nse_symbols_filepath)
 	return symbols_bse, symbols_nse
 }
