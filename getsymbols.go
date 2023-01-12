@@ -91,5 +91,8 @@ func getSymbols(symbols_data_dir string) ([]BseSymbol, []NseSymbol) {
 	// SaveNseSymbolstoCsv(symbols_nse, nse_symbols_filepath)
 	SaveNseSymbols(symbols_nse, db)
 
+	// build mappings
+	mappings := BuildBseNseSymbolMaps(symbols_bse, symbols_nse)
+
 	return symbols_bse, symbols_nse
 }
