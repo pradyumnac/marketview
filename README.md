@@ -20,4 +20,10 @@ View end of day market data in a easily reabale format in the terminal and web b
 1. This project will only show EOD data. Nothing intraday for trading purposes
 
 
+## FAQ
+1. Why does the script `nse_cd` return no data intermittently?
+Listing of companies shown in fzf list are from both BSE and NSE. Some companies
+are solely listed in BSE but not in NSE. This mght be one of those cases
 
+If you feel, you have encountered a bug, feel free to report
+However, include the run log for debug purposes 
