@@ -35,11 +35,19 @@ type NseSymbol struct {
 
 // Saves a slice of NseSymbol s to DB
 func SaveBseSymbols(symbols []BseSymbol, db *gorm.DB) {
+	// Delete all entries
+	db.Model(&BseSymbol{}).Delete(&BseSymbol{})
+
+	// Insert data afresh
 	db.CreateInBatches(symbols, 1000)
 }
 
 // Saves a slice of NseSymbol s to DB
 func SaveNseSymbols(symbols []NseSymbol, db *gorm.DB) {
+	// Deleteall entries
+	db.Model(&NseSymbol{}).Delete(&NseSymbol{})
+
+	// Insert data a fresh
 	db.CreateInBatches(symbols, 1000)
 }
 
