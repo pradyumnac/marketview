@@ -1,5 +1,6 @@
 .PHONY: all
 INSTALL_PREFIX := $${HOME}/.local/bin
+PWD := $(shell pwd)
 
 all: clean build install
 
@@ -8,9 +9,11 @@ clean:
 	@echo "Clean Done"
 
 build:
-	go build .
+	@go build -ldflags "-s -w" .
 	@echo "Build Done"
 
 install: 
 	@mv marketview $(INSTALL_PREFIX)/marketview
+	@ln -s -f $(PWD)/bse_cd.sh $(INSTALL_PREFIX)/bse_cd
+	@ln -s -f $(PWD)/nse_cd.sh $(INSTALL_PREFIX)/nse_cd
 	@echo "Install Done"
