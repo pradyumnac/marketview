@@ -77,7 +77,7 @@ func FetchNseSymbols() []NseSymbol {
 
 // Fetches both bse && nse symbols from respective servers
 // Saves this data ascsv file in symbols_data_dir
-func getSymbols(symbols_data_dir string) ([]BseSymbol, []NseSymbol) {
+func getSymbols(symbols_data_dir string) []SymbolsMapping {
 	db_filepath := path.Join(symbols_data_dir, "data.db")
 	db := GetDB(db_filepath)
 
@@ -92,7 +92,7 @@ func getSymbols(symbols_data_dir string) ([]BseSymbol, []NseSymbol) {
 	SaveNseSymbols(symbols_nse, db)
 
 	// build mappings
-	mappings := BuildBseNseSymbolMaps(symbols_bse, symbols_nse)
+	mappings := BuildBseNseSymbolMaps(symbols_bse, symbols_nse, db)
 
-	return symbols_bse, symbols_nse
+	return mappings
 }
