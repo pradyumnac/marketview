@@ -6,6 +6,8 @@ all: clean build install
 
 clean:
 	@rm -f marketview $(INSTALL_PREFIX)/marketview
+	@# @rm -fR ~/.local/share/marketview
+	@rm -f ~/.local/share/marketview/symbols/data.db
 	@echo "Clean Done"
 
 build:
