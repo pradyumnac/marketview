@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"time"
 
 	"gorm.io/driver/sqlite"
@@ -82,10 +83,12 @@ func SaveMappings(mappings []SymbolsMapping, db *gorm.DB) {
 	db.Model(&SymbolsMapping{}).Delete(&SymbolsMapping{})
 
 	// Insert data a fresh
-	db.Clauses(clause.OnConflict{
+	result := db.Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "isin"}}, // key colume
 		DoNothing: true,
 	}).CreateInBatches(mappings, 1000)
+
+	log.Printf("Added %d mappings", result.RowsAffected)
 }
 
 func GetDB(db_path string) *gorm.DB {
@@ -97,80 +100,4 @@ func GetDB(db_path string) *gorm.DB {
 	db.AutoMigrate(&NseSymbol{}, &BseSymbol{}, &SymbolsMapping{})
 
 	return db
-}
-
-// Returns a record set of all BSE<->NSE symbo mapings based on isin from db
-func GetSymbolsMapping(symbols_bse []BseSymbol, symbols_nse []NseSymbol) []SymbolsMapping {
-	var mappings []SymbolsMapping
-
-	return mappings
-}
-
-// Build a mapping of nse and bse symbols using iisin_number
-// For records where either is missing, the corresponding column is marked as empty
-// Pass this data to Save SymbolsMappng function to save to db
-// To use this data from db, call GetSymbolsMapping()
-func BuildBseNseSymbolMaps(symbols_bse []BseSymbol, symbols_nse []NseSymbol, db *gorm.DB) []SymbolsMapping {
-	// a list of isins for which maping s build
-	isin_visited := make(map[string]bool)
-	var mappings []SymbolsMapping
-
-	for _, symbol := range symbols_bse {
-		var nsesymbol NseSymbol
-		if _, exist := isin_visited[symbol.ISIN]; !exist {
-			var nsecd string
-			if err := db.First(&nsesymbol, "isin= ?", symbol.ISIN).Error; err == nil {
-				// record found
-				nsecd = nsesymbol.ScripCd
-			} else {
-				// record missing
-				nsecd = ""
-			}
-			mapping := SymbolsMapping{
-				ISIN:      symbol.ISIN,
-				ScripName: symbol.ScripName,
-				BseCd:     symbol.ScripCd,
-				BseId:     symbol.ScripId,
-				NseCd:     nsecd,
-				Industry:  symbol.Industry,
-				Group:     symbol.Group,
-			}
-			mappings = append(mappings, mapping)
-		}
-		isin_visited[symbol.ISIN] = true
-	}
-
-	for _, symbol := range symbols_nse {
-		var bsesymbol BseSymbol
-		if _, exist := isin_visited[symbol.ISIN]; !exist {
-			// exists in nse but not in bse
-			var bsecd, bseid, industry, group string
-			if err := db.First(&bsesymbol, "isin= ?", symbol.ISIN).Error; err == nil {
-				// record found
-				bsecd = bsesymbol.ScripCd
-				bseid = bsesymbol.ScripId
-				industry = bsesymbol.Industry
-				group = bsesymbol.Group
-			} else {
-				// record missing
-				bsecd = ""
-				bseid = ""
-				industry = ""
-				group = ""
-			}
-			mapping := SymbolsMapping{
-				ISIN:      symbol.ISIN,
-				ScripName: symbol.ScripName,
-				BseCd:     bsecd,
-				BseId:     bseid,
-				NseCd:     symbol.ScripCd,
-				Industry:  industry,
-				Group:     group,
-			}
-			mappings = append(mappings, mapping)
-		}
-		isin_visited[symbol.ISIN] = true
-	}
-
-	return mappings
 }
