@@ -65,6 +65,15 @@ func SaveNseSymbols(symbols []NseSymbol, db *gorm.DB) {
 	db.CreateInBatches(symbols, 1000)
 }
 
+// Saves a slice of NseSymbol s to DB
+func SaveMappings(mappings []SymbolsMapping, db *gorm.DB) {
+	// Deleteall entries
+	db.Model(&SymbolsMapping{}).Delete(&SymbolsMapping{})
+
+	// Insert data a fresh
+	db.CreateInBatches(mappings, 1000)
+}
+
 func GetDB(db_path string) *gorm.DB {
 	// Connect to database
 	db, err := gorm.Open(sqlite.Open(db_path), &gorm.Config{})

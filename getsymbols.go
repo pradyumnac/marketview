@@ -93,6 +93,7 @@ func getSymbols(symbols_data_dir string) []SymbolsMapping {
 
 	// build mappings
 	mappings := BuildBseNseSymbolMaps(symbols_bse, symbols_nse, db)
+	SaveMappings(mappings, db)
 
 	return mappings
 }
