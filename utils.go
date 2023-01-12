@@ -24,6 +24,12 @@ func GetConfig() (string, string) {
 	return CONFIG_DIR, DATA_DIR
 }
 
+func CheckErr(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func SaveNseSymbolstoCsv(symbols []NseSymbol, csvFilePath string) {
 	buff := &bytes.Buffer{}
 	w := struct2csv.NewWriter(buff)

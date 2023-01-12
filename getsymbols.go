@@ -21,36 +21,6 @@ var (
 	DATA_DIR   string
 )
 
-type BseSymbol struct {
-	SCRIP_CD    string
-	Scrip_Name  string
-	Status      string
-	GROUP       string
-	FACE_VALUE  string
-	ISIN_NUMBER string
-	INDUSTRY    string
-	Scrip_id    string
-	Segment     string
-	NSURL       string
-	Issuer_Name string
-	Mktcap      string
-}
-
-type NseSymbol struct {
-	SCRIP_CD    string `csv:"SYMBOL"`
-	Scrip_Name  string `csv:"NAME OF COMPANY"`
-	Status      string `csv:""`
-	GROUP       string `csv:""`
-	FACE_VALUE  string `csv:""`
-	ISIN_NUMBER string `csv:"ISIN NUMBER"`
-	INDUSTRY    string `csv:""`
-	Scrip_id    string `csv:""`
-	Segment     string `csv:""`
-	NSURL       string `csv:""`
-	Issuer_Name string `csv:""`
-	Mktcap      string `csv:""`
-}
-
 func FetchRes(url string) []byte {
 	spaceClient := http.Client{
 		Timeout: time.Second * 5,
@@ -108,12 +78,18 @@ func FetchNseSymbols() []NseSymbol {
 // Fetches both bse && nse symbols from respective servers
 // Saves this data ascsv file in symbols_data_dir
 func getSymbols(symbols_data_dir string) ([]BseSymbol, []NseSymbol) {
+	db_filepath := path.Join(symbols_data_dir, "data.db")
+	db := GetDB(db_filepath)
+
 	symbols_bse := FetchBseSymbols()
-	bse_symbols_filepath := path.Join(symbols_data_dir, "bse.csv")
-	SaveBseSymbolstoCsv(symbols_bse, bse_symbols_filepath)
+	// bse_symbols_filepath := path.Join(symbols_data_dir, "bse.csv")
+	// SaveBseSymbolstoCsv(symbols_bse, bse_symbols_filepath)
+	SaveBseSymbols(symbols_bse, db)
 
 	symbols_nse := FetchNseSymbols()
-	nse_symbols_filepath := path.Join(symbols_data_dir, "nse.csv")
-	SaveNseSymbolstoCsv(symbols_nse, nse_symbols_filepath)
+	// nse_symbols_filepath := path.Join(symbols_data_dir, "nse.csv")
+	// SaveNseSymbolstoCsv(symbols_nse, nse_symbols_filepath)
+	SaveNseSymbols(symbols_nse, db)
+
 	return symbols_bse, symbols_nse
 }
