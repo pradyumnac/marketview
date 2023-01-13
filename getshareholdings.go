@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -70,15 +71,22 @@ func getShareholdingQtrId(qtr_string string) int {
 func ParseCategory(doc *goquery.Document) []ShareholdingCategory {
 	var categories []ShareholdingCategory
 	// Find the review items
-	doc.Find("#tdData > table > tbody > tr:nth-child(5) > td > table > tr").Each(func(i int, s *goquery.Selection) {
+	doc.Find("#tdData > table > tbody > tr:nth-child(5) > td > table > tbody > tr").Each(func(i int, s *goquery.Selection) {
 		// For each item found, get the title
-		categories = append(categories, ShareholdingCategory{
-			CategoryName: s.Find("td.TTRow_left").Text(),
-			HolderCount:  s.Find("td.TTRow_Right:nth-child(1)").Text(),
-			NoOfShares:   s.Find("td.TTRow_Right:nth-child(2)").Text(),
-			PctHolding:   s.Find("td.TTRow_Right:nth-child(3)").Text(),
-		})
+
+		left_column := s.Find("td.TTRow_left")
+		if left_column.Length() > 0 {
+			right_column := s.Find("td.TTRow_right")
+			categories = append(categories, ShareholdingCategory{
+				CategoryName: left_column.Text(),
+				HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
+				NoOfShares:   strings.Replace(right_column.Eq(1).Text(), ",", "", -1),
+				PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
+			})
+		}
 	})
+
+	log.Println(categories)
 
 	return categories
 }
