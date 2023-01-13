@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -21,7 +22,7 @@ var (
 	DATA_DIR   string
 )
 
-func FetchRes(url string) []byte {
+func FetchResBody(url string) io.ReadCloser {
 	spaceClient := http.Client{
 		Timeout: time.Second * 5,
 	}
@@ -38,11 +39,18 @@ func FetchRes(url string) []byte {
 		log.Fatal(getErr)
 	}
 
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
+	// if res.Body != nil {
+	// 	defer res.Body.Close()
+	// }
 
-	resp, readErr := ioutil.ReadAll(res.Body)
+	return res.Body
+}
+
+func FetchResBytes(url string) []byte {
+	body := FetchResBody(url)
+	defer body.Close()
+
+	resp, readErr := ioutil.ReadAll(body)
 	if readErr != nil {
 		log.Fatal(readErr)
 	}
@@ -54,7 +62,7 @@ func FetchRes(url string) []byte {
 func FetchBseSymbols() []BseSymbol {
 	url := "https://api.bseindia.com/BseIndiaAPI/api/ListofScripData/w?Group=&Scripcode=&industry=&segment=Equity&status=Active"
 
-	resp := FetchRes(url)
+	resp := FetchResBytes(url)
 	var scrips []BseSymbol
 	jsonErr := json.Unmarshal(resp, &scrips)
 	if jsonErr != nil {
@@ -67,7 +75,7 @@ func FetchBseSymbols() []BseSymbol {
 func FetchNseSymbols() []NseSymbol {
 	url := "https://www1.nseindia.com/content/equities/EQUITY_L.csv"
 
-	resp := FetchRes(url)
+	resp := FetchResBytes(url)
 	var scrips []NseSymbol
 	if err := gocsv.UnmarshalBytes(resp, &scrips); err != nil { // Load clients from file
 		panic(err)

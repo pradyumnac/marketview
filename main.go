@@ -5,6 +5,11 @@ const usage = `Usage:
   -h, --help prints help information 
 `
 
+// for testing, comment out when not needed
+func main() {
+	getShareholding("512529", "FY22Q4")
+}
+
 // main cli handle
 // func main() {
 // 	// fmt.Println("##### Marketview v0.1 #####")
@@ -39,7 +44,3 @@ const usage = `Usage:
 // 	fmt.Print(usage)
 // 	os.Exit(1)
 // }
-
-func main() {
-	getShareholding("500209", "Dec 2022")
-}
