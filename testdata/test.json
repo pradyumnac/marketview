@@ -55,276 +55,276 @@
 ],
 "PublicHoldings": [
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "B1) Institutions",
 "HolderCount": "0",
 "NoOfShares": "0",
-"PctHolding": ""
+"PctHolding": "0.00"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Mutual Funds/",
 "HolderCount": "6",
 "NoOfShares": "1260984",
-"PctHolding": ""
+"PctHolding": "0.51"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Alternate Investment Funds",
 "HolderCount": "8",
 "NoOfShares": "1459658",
-"PctHolding": ""
+"PctHolding": "0.59"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Foreign Portfolio Investors",
 "HolderCount": "31",
 "NoOfShares": "15941986",
-"PctHolding": ""
+"PctHolding": "6.42"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "ASHOKA INDIA OPPORTUNITIES FUND",
 "HolderCount": "1",
 "NoOfShares": "4078604",
-"PctHolding": ""
+"PctHolding": "1.64"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Any Other (specify)",
 "HolderCount": "1",
 "NoOfShares": "2569090",
-"PctHolding": ""
+"PctHolding": "1.03"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "ICICI LOMBARD GENERAL INSURANCE COMPANY LTD",
 "HolderCount": "1",
 "NoOfShares": "2569090",
-"PctHolding": ""
+"PctHolding": "1.03"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Sub Total B1",
 "HolderCount": "46",
 "NoOfShares": "21231718",
-"PctHolding": ""
+"PctHolding": "8.55"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "B2) Central  Government/  State  Government(s)/ President of India",
 "HolderCount": "0",
 "NoOfShares": "0",
-"PctHolding": ""
+"PctHolding": "0.00"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "B3) Non-Institutions",
 "HolderCount": "0",
 "NoOfShares": "0",
-"PctHolding": ""
+"PctHolding": "0.00"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Individual share capital upto Rs. 2 Lacs",
 "HolderCount": "161634",
 "NoOfShares": "53873483",
-"PctHolding": ""
+"PctHolding": "21.69"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Individual share capital in excess of Rs. 2 Lacs",
 "HolderCount": "38",
 "NoOfShares": "11464294",
-"PctHolding": ""
+"PctHolding": "4.62"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Any Other (specify)",
 "HolderCount": "6092",
 "NoOfShares": "28770097",
-"PctHolding": ""
+"PctHolding": "11.58"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Director or Director's Relatives",
 "HolderCount": "2",
 "NoOfShares": "2367565",
-"PctHolding": ""
+"PctHolding": "0.95"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "HUF",
 "HolderCount": "2240",
 "NoOfShares": "2133840",
-"PctHolding": ""
+"PctHolding": "0.86"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "IEPF",
 "HolderCount": "1",
 "NoOfShares": "22900",
-"PctHolding": ""
+"PctHolding": "0.01"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "UNIT TRUST OF INDIA INVESTMENT ADVISORY SERVICES LIMITED A/C ASCENT INDIA FUND III",
 "HolderCount": "1",
 "NoOfShares": "8309763",
-"PctHolding": ""
+"PctHolding": "3.35"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Bodies Corporate",
 "HolderCount": "1054",
 "NoOfShares": "20831907",
-"PctHolding": ""
+"PctHolding": "8.39"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Clearing Members",
 "HolderCount": "114",
 "NoOfShares": "540117",
-"PctHolding": ""
+"PctHolding": "0.22"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Non-Resident Indian (NRI)",
 "HolderCount": "2674",
 "NoOfShares": "2824358",
-"PctHolding": ""
+"PctHolding": "1.14"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Trusts",
 "HolderCount": "7",
 "NoOfShares": "49410",
-"PctHolding": ""
+"PctHolding": "0.02"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Sub Total B3",
 "HolderCount": "167764",
 "NoOfShares": "94107874",
-"PctHolding": ""
+"PctHolding": "37.89"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Public",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "B=B1+B2+B3",
 "HolderCount": "167810",
 "NoOfShares": "115339592",
-"PctHolding": ""
+"PctHolding": "46.44"
 }
 ],
 "DiiHoldings": null,
 "FiiHoldings": null,
 "PromoterHoldings": [
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Promoter",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Any Other (specify)",
-"HolderCount": "               1",
+"HolderCount": "1",
 "NoOfShares": "131680103",
 "PctHolding": "53.02"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Promoter",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "CA HARBOR INVESTMENTSPromoter",
-"HolderCount": "               1",
+"HolderCount": "1",
 "NoOfShares": "131680103",
 "PctHolding": "53.02"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Promoter",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "Sub Total A2",
-"HolderCount": "               1",
+"HolderCount": "1",
 "NoOfShares": "131680103",
 "PctHolding": "53.02"
 },
 {
-"TypeCd": "1",
+"TypeCd": "2",
 "TypeName": "Promoter",
 "Qtr": "FY22Q4",
 "BseScripId": "512529",
 "CategoryName": "A=A1+A2",
-"HolderCount": "               1",
+"HolderCount": "1",
 "NoOfShares": "131680103",
 "PctHolding": "53.02"
 }

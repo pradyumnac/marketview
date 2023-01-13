@@ -80,17 +80,19 @@ func getPublicShareholding(bse_scrip_id string, qtrid int, qtr_string string) ([
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
 			typename := "Public" // TODO: may be mf, DII, FII, public
-			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1))
+			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1), " ")
+			pct_holding := strings.Trim(strings.Replace(right_column.Eq(5).Text(), ",", "", -1), " ")
+			holder_count := strings.Trim(strings.Replace(right_column.Eq(0).Text(), ",", "", -1), " ")
 			if len(no_of_shares) > 0 {
 				public_holdings = append(public_holdings, ShareholdingLineItem{
-					TypeCd:       "1",
+					TypeCd:       "2",
 					TypeName:     typename,
 					BseScripId:   bse_scrip_id,
 					Qtr:          qtr_string,
 					CategoryName: left_column.Text(),
-					HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
+					HolderCount:  holder_count,
 					NoOfShares:   no_of_shares,
-					PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
+					PctHolding:   pct_holding,
 				})
 			}
 		}
@@ -120,17 +122,19 @@ func getPromoterShareholding(bse_scrip_id string, qtrid int, qtr_string string) 
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
 			typename := "Promoter"
-			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1))
+			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1), " ")
+			pct_holding := strings.Trim(strings.Replace(right_column.Eq(3).Text(), ",", "", -1), " ")
+			holder_count := strings.Trim(strings.Replace(right_column.Eq(0).Text(), ",", "", -1), " ")
 			if len(no_of_shares) > 0 {
 				promoter_holdings = append(promoter_holdings, ShareholdingLineItem{
-					TypeCd:       "1",
+					TypeCd:       "2",
 					TypeName:     typename,
 					BseScripId:   bse_scrip_id,
 					Qtr:          qtr_string,
 					CategoryName: left_column.Text(),
-					HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
+					HolderCount:  holder_count,
 					NoOfShares:   no_of_shares,
-					PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
+					PctHolding:   pct_holding,
 				})
 			}
 		}
@@ -149,7 +153,9 @@ func ParseCategory(bse_scrip_id string, qtr_string string, doc *goquery.Document
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
 			typename := "overview"
-			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1))
+			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1), " ")
+			pct_holding := strings.Trim(strings.Replace(right_column.Eq(3).Text(), ",", "", -1), " ")
+			holder_count := strings.Trim(strings.Replace(right_column.Eq(0).Text(), ",", "", -1), " ")
 			if len(no_of_shares) > 0 {
 				categories = append(categories, ShareholdingLineItem{
 					TypeCd:       "1",
@@ -157,9 +163,9 @@ func ParseCategory(bse_scrip_id string, qtr_string string, doc *goquery.Document
 					BseScripId:   bse_scrip_id,
 					Qtr:          qtr_string,
 					CategoryName: left_column.Text(),
-					HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
+					HolderCount:  holder_count,
 					NoOfShares:   no_of_shares,
-					PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
+					PctHolding:   pct_holding,
 				})
 			}
 		}
