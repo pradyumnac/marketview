@@ -80,7 +80,7 @@ func getPublicShareholding(bse_scrip_id string, qtrid int, qtr_string string) ([
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
 			typename := "Public" // TODO: may be mf, DII, FII, public
-			no_of_shares := strings.Replace(right_column.Eq(1).Text(), ",", "", -1)
+			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1))
 			if len(no_of_shares) > 0 {
 				public_holdings = append(public_holdings, ShareholdingLineItem{
 					TypeCd:       "1",
@@ -120,7 +120,7 @@ func getPromoterShareholding(bse_scrip_id string, qtrid int, qtr_string string) 
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
 			typename := "Promoter"
-			no_of_shares := strings.Replace(right_column.Eq(1).Text(), ",", "", -1)
+			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1))
 			if len(no_of_shares) > 0 {
 				promoter_holdings = append(promoter_holdings, ShareholdingLineItem{
 					TypeCd:       "1",
@@ -149,7 +149,7 @@ func ParseCategory(bse_scrip_id string, qtr_string string, doc *goquery.Document
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
 			typename := "overview"
-			no_of_shares := strings.Replace(right_column.Eq(1).Text(), ",", "", -1)
+			no_of_shares := strings.Trim(strings.Replace(right_column.Eq(1).Text(), ",", "", -1))
 			if len(no_of_shares) > 0 {
 				categories = append(categories, ShareholdingLineItem{
 					TypeCd:       "1",
