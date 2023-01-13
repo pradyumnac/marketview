@@ -10,6 +10,42 @@ import (
 	"gorm.io/gorm/logger"
 )
 
+// These Struct can be saved as csv
+type CsvCompatibleType interface {
+	ShareholdingLineItem
+}
+
+// These Struct can be saved as json
+type JsonCompatibleType interface {
+	ShareholdingQtr | ShareholdingLineItem | ShareHoldings
+}
+
+// this stores a single line item of shareholding data
+type ShareholdingLineItem struct {
+	TypeCd       string
+	TypeName     string
+	Qtr          string
+	BseScripId   string
+	CategoryName string
+	HolderCount  string
+	NoOfShares   string
+	PctHolding   string
+}
+
+// This struct can store a company's shareholding for a quarter
+type ShareholdingQtr struct {
+	BseScripId       string
+	QtrString        string
+	OverviewHoldings []ShareholdingLineItem
+	PublicHoldings   []ShareholdingLineItem
+	DiiHoldings      []ShareholdingLineItem
+	FiiHoldings      []ShareholdingLineItem
+	PromoterHoldings []ShareholdingLineItem
+}
+
+// This struct stores shareholdings of a company across quarters
+type ShareHoldings map[string]ShareholdingQtr
+
 // This table contains the company name, bse and nse code mapped using isin_number
 type SymbolsMapping struct {
 	NseCd     string

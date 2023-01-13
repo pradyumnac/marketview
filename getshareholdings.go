@@ -9,33 +9,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type ShareholdingPromoter struct {
-	EntityType   string
-	CategoryName string
-	HolderCount  string
-	NoOfShares   string
-	PctHolding   string
-}
-
-type ShareholdingPublic struct {
-	CategoryName string
-	HolderCount  string
-	NoOfShares   string
-	PctHolding   string
-}
-type ShareholdingCategory struct {
-	CategoryName string
-	HolderCount  string
-	NoOfShares   string
-	PctHolding   string
-}
-
-type Shareholding struct {
-	categories []ShareholdingCategory
-	public     []ShareholdingPromoter
-	promoter   []ShareholdingPromoter
-}
-
 // Gets QTR STring based on curent datetime
 // Warning: This function return the last completed qtr
 // (( For whch results/documents will be avalable
@@ -84,8 +57,10 @@ func getShareholdingQtrId(qtr_string string) int {
 }
 
 // Get shareholding breakup for Non Promoters
-func getPublicShareholding(bse_scrip_id string, qtrid int) []ShareholdingPublic {
-	var public_holding []ShareholdingPublic
+func getPublicShareholding(bse_scrip_id string, qtrid int, qtr_string string) ([]ShareholdingLineItem, []ShareholdingLineItem, []ShareholdingLineItem) {
+	var public_holdings []ShareholdingLineItem
+	var dii_holdings []ShareholdingLineItem
+	var fii_holdings []ShareholdingLineItem
 
 	// qtrid := getShareholdingQtrId(qtr_string)
 	url_string := "https://www.bseindia.com/corporates/shpPublicShareholder.aspx?scripcd=%s&qtrid=%d"
@@ -104,20 +79,28 @@ func getPublicShareholding(bse_scrip_id string, qtrid int) []ShareholdingPublic 
 		left_column := s.Find("td.TTRow_left")
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
-			public_holding = append(public_holding, ShareholdingPublic{
-				CategoryName: left_column.Text(),
-				HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
-				NoOfShares:   strings.Replace(right_column.Eq(1).Text(), ",", "", -1),
-				PctHolding:   strings.Replace(right_column.Eq(5).Text(), ",", "", -1),
-			})
+			typename := "Public" // TODO: may be mf, DII, FII, public
+			no_of_shares := strings.Replace(right_column.Eq(1).Text(), ",", "", -1)
+			if len(no_of_shares) > 0 {
+				public_holdings = append(public_holdings, ShareholdingLineItem{
+					TypeCd:       "1",
+					TypeName:     typename,
+					BseScripId:   bse_scrip_id,
+					Qtr:          qtr_string,
+					CategoryName: left_column.Text(),
+					HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
+					NoOfShares:   no_of_shares,
+					PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
+				})
+			}
 		}
 	})
-	return public_holding
+	return public_holdings, dii_holdings, fii_holdings
 }
 
 // Get Promoter & Promoter group shareholding breakup
-func getPromoterShareholding(bse_scrip_id string, qtrid int) []ShareholdingPromoter {
-	var promoter_holdings []ShareholdingPromoter
+func getPromoterShareholding(bse_scrip_id string, qtrid int, qtr_string string) []ShareholdingLineItem {
+	var promoter_holdings []ShareholdingLineItem
 
 	// qtrid := getShareholdingQtrId(qtr_string)
 	url_string := "https://www.bseindia.com/corporates/shpPromoterNGroup.aspx?scripcd=%s&qtrid=%d"
@@ -136,21 +119,28 @@ func getPromoterShareholding(bse_scrip_id string, qtrid int) []ShareholdingPromo
 		left_column := s.Find("td.TTRow_left")
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
-			promoter_holdings = append(promoter_holdings, ShareholdingPromoter{
-				CategoryName: left_column.Eq(0).Text(),
-				EntityType:   left_column.Eq(1).Text(),
-				HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
-				NoOfShares:   strings.Replace(right_column.Eq(1).Text(), ",", "", -1),
-				PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
-			})
+			typename := "Promoter"
+			no_of_shares := strings.Replace(right_column.Eq(1).Text(), ",", "", -1)
+			if len(no_of_shares) > 0 {
+				promoter_holdings = append(promoter_holdings, ShareholdingLineItem{
+					TypeCd:       "1",
+					TypeName:     typename,
+					BseScripId:   bse_scrip_id,
+					Qtr:          qtr_string,
+					CategoryName: left_column.Text(),
+					HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
+					NoOfShares:   no_of_shares,
+					PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
+				})
+			}
 		}
 	})
 	return promoter_holdings
 }
 
 // parse shareholding category page
-func ParseCategory(doc *goquery.Document) []ShareholdingCategory {
-	var categories []ShareholdingCategory
+func ParseCategory(bse_scrip_id string, qtr_string string, doc *goquery.Document) []ShareholdingLineItem {
+	var categories []ShareholdingLineItem
 	// Find the review items
 	doc.Find("#tdData > table > tbody > tr:nth-child(5) > td > table > tbody > tr").Each(func(i int, s *goquery.Selection) {
 		// For each item found, get the title
@@ -158,12 +148,20 @@ func ParseCategory(doc *goquery.Document) []ShareholdingCategory {
 		left_column := s.Find("td.TTRow_left")
 		if left_column.Length() > 0 {
 			right_column := s.Find("td.TTRow_right")
-			categories = append(categories, ShareholdingCategory{
-				CategoryName: left_column.Text(),
-				HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
-				NoOfShares:   strings.Replace(right_column.Eq(1).Text(), ",", "", -1),
-				PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
-			})
+			typename := "overview"
+			no_of_shares := strings.Replace(right_column.Eq(1).Text(), ",", "", -1)
+			if len(no_of_shares) > 0 {
+				categories = append(categories, ShareholdingLineItem{
+					TypeCd:       "1",
+					TypeName:     typename,
+					BseScripId:   bse_scrip_id,
+					Qtr:          qtr_string,
+					CategoryName: left_column.Text(),
+					HolderCount:  strings.Replace(right_column.Eq(0).Text(), ",", "", -1),
+					NoOfShares:   no_of_shares,
+					PctHolding:   strings.Replace(right_column.Eq(3).Text(), ",", "", -1),
+				})
+			}
 		}
 	})
 	return categories
@@ -171,10 +169,10 @@ func ParseCategory(doc *goquery.Document) []ShareholdingCategory {
 
 // get shareholding data for a bse listed company
 // earliest available  qtr string for infy : 88: FY16Q3 - for dec2015
-func getShareholding(bse_scrip_id string, qtr_string string) Shareholding {
+func getShareholdingQtr(bse_scrip_id string, qtr_string string) ShareholdingQtr {
 	// https://www.bseindia.com/corporates/shpSecurities.aspx?scripcd=500209&qtrid=115.00&Flag=New
 
-	holding := Shareholding{}
+	holdingQtr := ShareholdingQtr{}
 
 	qtrid := getShareholdingQtrId(qtr_string)
 	url_string := "https://www.bseindia.com/corporates/shpSecurities.aspx?scripcd=%s&qtrid=%d.00&Flag=New"
@@ -187,19 +185,33 @@ func getShareholding(bse_scrip_id string, qtr_string string) Shareholding {
 	if err != nil {
 		log.Fatal(err)
 	}
-	categories := ParseCategory(doc)
-	promoter_holdings := getPromoterShareholding(bse_scrip_id, qtrid)
-	public_holdings := getPublicShareholding(bse_scrip_id, qtrid)
+	overview_holdings := ParseCategory(bse_scrip_id, qtr_string, doc)
+	promoter_holdings := getPromoterShareholding(bse_scrip_id, qtrid, qtr_string)
+	public_holdings, dii_holdings, fii_holdings := getPublicShareholding(bse_scrip_id, qtrid, qtr_string)
 
-	log.Println(categories)
-	log.Println(promoter_holdings)
-	log.Println(public_holdings)
+	// log.Println(overview_holdings)
+	// log.Println(promoter_holdings)
+	// log.Println(public_holdings)
+
+	holdingQtr.QtrString = qtr_string
+	holdingQtr.BseScripId = bse_scrip_id
+	holdingQtr.OverviewHoldings = overview_holdings
+	holdingQtr.PromoterHoldings = promoter_holdings
+	holdingQtr.PublicHoldings = public_holdings
+	holdingQtr.DiiHoldings = dii_holdings
+	holdingQtr.FiiHoldings = fii_holdings
 
 	// Do some parsing to get  a single holding structure
-	return holding
+	return holdingQtr
 }
 
 // returns sharehokding for the co for latest published qtr
-func getLatestShareholding(bse_scrip_id string) Shareholding {
-	return getShareholding(bse_scrip_id, getLatestQtrString())
+func getLatestShareholding(bse_scrip_id string) ShareholdingQtr {
+	return getShareholdingQtr(bse_scrip_id, getLatestQtrString())
+}
+
+func GetRecentShareholdings(bse_scrip_id string) ShareHoldings {
+	companyShareHoldings := make(ShareHoldings)
+
+	return companyShareHoldings
 }

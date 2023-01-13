@@ -7,7 +7,8 @@ const usage = `Usage:
 
 // for testing, comment out when not needed
 func main() {
-	getShareholding("512529", "FY22Q4")
+	holdings := getShareholdingQtr("512529", "FY22Q4")
+	JsonToCsv(holdings, "testdata/test.json")
 }
 
 // main cli handle
