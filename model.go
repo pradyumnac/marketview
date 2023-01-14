@@ -123,7 +123,7 @@ func SaveMappings(mappings []SymbolsMapping, db *gorm.DB) {
 type ShareholdingLineItem struct {
 	TypeCd       string
 	TypeName     string
-	Qtr          string
+	QtrId        string
 	BseScripId   string
 	CategoryName string
 	HolderCount  string
@@ -134,7 +134,7 @@ type ShareholdingLineItem struct {
 // This struct can store a company's shareholding for a quarter
 type ShareholdingQtr struct {
 	BseScripId       string
-	QtrString        string
+	QtrId            string
 	OverviewHoldings []ShareholdingLineItem
 	PublicHoldings   []ShareholdingLineItem
 	DiiHoldings      []ShareholdingLineItem
