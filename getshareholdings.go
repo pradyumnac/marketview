@@ -191,21 +191,27 @@ func getShareholdingQtr(bse_scrip_id string, qtr_string string) ShareholdingQtr 
 	if err != nil {
 		log.Fatal(err)
 	}
-	overview_holdings := ParseCategory(bse_scrip_id, qtr_string, doc)
-	promoter_holdings := getPromoterShareholding(bse_scrip_id, qtrid, qtr_string)
-	public_holdings, dii_holdings, fii_holdings := getPublicShareholding(bse_scrip_id, qtrid, qtr_string)
 
-	// log.Println(overview_holdings)
-	// log.Println(promoter_holdings)
-	// log.Println(public_holdings)
-
+	// Initialized struct
 	holdingQtr.QtrString = qtr_string
 	holdingQtr.BseScripId = bse_scrip_id
-	holdingQtr.OverviewHoldings = overview_holdings
-	holdingQtr.PromoterHoldings = promoter_holdings
-	holdingQtr.PublicHoldings = public_holdings
-	holdingQtr.DiiHoldings = dii_holdings
-	holdingQtr.FiiHoldings = fii_holdings
+
+	// check if shareholding data is avilable for the quarter
+	if doc.Find("#tdData > table > tbody > tr:nth-child(5) > td > table > tbody > tr").Length() > 0 {
+		overview_holdings := ParseCategory(bse_scrip_id, qtr_string, doc)
+		promoter_holdings := getPromoterShareholding(bse_scrip_id, qtrid, qtr_string)
+		public_holdings, dii_holdings, fii_holdings := getPublicShareholding(bse_scrip_id, qtrid, qtr_string)
+
+		// log.Println(overview_holdings)
+		// log.Println(promoter_holdings)
+		// log.Println(public_holdings)
+
+		holdingQtr.OverviewHoldings = overview_holdings
+		holdingQtr.PromoterHoldings = promoter_holdings
+		holdingQtr.PublicHoldings = public_holdings
+		holdingQtr.DiiHoldings = dii_holdings
+		holdingQtr.FiiHoldings = fii_holdings
+	}
 
 	// Do some parsing to get  a single holding structure
 	return holdingQtr
@@ -216,6 +222,7 @@ func getLatestShareholding(bse_scrip_id string) ShareholdingQtr {
 	return getShareholdingQtr(bse_scrip_id, getLatestQtrString())
 }
 
+// Get the comapny share holding data for last 7 years
 func GetRecentShareholdings(bse_scrip_id string) ShareHoldings {
 	companyShareHoldings := make(ShareHoldings)
 

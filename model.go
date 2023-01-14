@@ -20,31 +20,21 @@ type JsonCompatibleType interface {
 	ShareholdingQtr | ShareholdingLineItem | ShareHoldings
 }
 
-// this stores a single line item of shareholding data
-type ShareholdingLineItem struct {
-	TypeCd       string
-	TypeName     string
-	Qtr          string
-	BseScripId   string
-	CategoryName string
-	HolderCount  string
-	NoOfShares   string
-	PctHolding   string
+// ##################################### Generic ####################################
+
+// FB factory
+func GetDB(db_path string) *gorm.DB {
+	// Connect to database
+	db, err := gorm.Open(sqlite.Open(db_path), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
+	CheckErr(err)
+
+	// Migrate the schema
+	db.AutoMigrate(&NseSymbol{}, &BseSymbol{}, &SymbolsMapping{})
+
+	return db
 }
 
-// This struct can store a company's shareholding for a quarter
-type ShareholdingQtr struct {
-	BseScripId       string
-	QtrString        string
-	OverviewHoldings []ShareholdingLineItem
-	PublicHoldings   []ShareholdingLineItem
-	DiiHoldings      []ShareholdingLineItem
-	FiiHoldings      []ShareholdingLineItem
-	PromoterHoldings []ShareholdingLineItem
-}
-
-// This struct stores shareholdings of a company across quarters
-type ShareHoldings map[string]ShareholdingQtr
+// ###################################### Symbols ####################################
 
 // This table contains the company name, bse and nse code mapped using isin_number
 type SymbolsMapping struct {
@@ -113,7 +103,7 @@ func SaveNseSymbols(symbols []NseSymbol, db *gorm.DB) {
 	}).CreateInBatches(&symbols, 1000)
 }
 
-// Saves a slice of NseSymbol s to DB
+// Saves the bse/nse mapping struct to DB
 func SaveMappings(mappings []SymbolsMapping, db *gorm.DB) {
 	// Deleteall entries
 	db.Model(&SymbolsMapping{}).Delete(&SymbolsMapping{})
@@ -127,13 +117,35 @@ func SaveMappings(mappings []SymbolsMapping, db *gorm.DB) {
 	log.Printf("Added %d mappings", result.RowsAffected)
 }
 
-func GetDB(db_path string) *gorm.DB {
-	// Connect to database
-	db, err := gorm.Open(sqlite.Open(db_path), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
-	CheckErr(err)
+// ####################### ShareHolding #################################
 
-	// Migrate the schema
-	db.AutoMigrate(&NseSymbol{}, &BseSymbol{}, &SymbolsMapping{})
+// this stores a single line item of shareholding data
+type ShareholdingLineItem struct {
+	TypeCd       string
+	TypeName     string
+	Qtr          string
+	BseScripId   string
+	CategoryName string
+	HolderCount  string
+	NoOfShares   string
+	PctHolding   string
+}
 
-	return db
+// This struct can store a company's shareholding for a quarter
+type ShareholdingQtr struct {
+	BseScripId       string
+	QtrString        string
+	OverviewHoldings []ShareholdingLineItem
+	PublicHoldings   []ShareholdingLineItem
+	DiiHoldings      []ShareholdingLineItem
+	FiiHoldings      []ShareholdingLineItem
+	PromoterHoldings []ShareholdingLineItem
+}
+
+// This struct stores shareholdings of a company across quarters
+type ShareHoldings map[string]ShareholdingQtr
+
+// Stores Shareholding struct to database
+// To save Shareholdings, run this function in a loop
+func SaveShareHoldingQtr(holdingQtr ShareholdingQtr) {
 }

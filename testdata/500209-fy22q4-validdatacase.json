@@ -1,0 +1,692 @@
+{
+  "BseScripId": "500209",
+  "QtrString": "FY22Q4",
+  "OverviewHoldings": [
+    {
+      "TypeCd": "1",
+      "TypeName": "overview",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "(A) Promoter \u0026 Promoter Group",
+      "HolderCount": "24",
+      "NoOfShares": "551682338",
+      "PctHolding": "551682338"
+    },
+    {
+      "TypeCd": "1",
+      "TypeName": "overview",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "(B) Public",
+      "HolderCount": "1897160",
+      "NoOfShares": "3637114068",
+      "PctHolding": "3639480900"
+    },
+    {
+      "TypeCd": "1",
+      "TypeName": "overview",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "(C2) Shares held by Employee Trust",
+      "HolderCount": "1",
+      "NoOfShares": "14454720",
+      "PctHolding": "14454720"
+    },
+    {
+      "TypeCd": "1",
+      "TypeName": "overview",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "(C) Non Promoter-Non Public",
+      "HolderCount": "1",
+      "NoOfShares": "14454720",
+      "PctHolding": "14454720"
+    },
+    {
+      "TypeCd": "1",
+      "TypeName": "overview",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Grand Total",
+      "HolderCount": "1897185",
+      "NoOfShares": "4203251126",
+      "PctHolding": "4205617958"
+    }
+  ],
+  "PublicHoldings": [
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "B1) Institutions",
+      "HolderCount": "0",
+      "NoOfShares": "0",
+      "PctHolding": "0.00"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Mutual Funds/",
+      "HolderCount": "38",
+      "NoOfShares": "537943484",
+      "PctHolding": "12.79"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "SBI MUTUAL FUND",
+      "HolderCount": "1",
+      "NoOfShares": "131674381",
+      "PctHolding": "3.13"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "UTI MUTUAL FUND",
+      "HolderCount": "1",
+      "NoOfShares": "50646675",
+      "PctHolding": "1.20"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "HDFC MUTUAL FUND",
+      "HolderCount": "1",
+      "NoOfShares": "47132564",
+      "PctHolding": "1.12"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "ICICI PRUDENTIAL MUTUAL FUND",
+      "HolderCount": "1",
+      "NoOfShares": "58270241",
+      "PctHolding": "1.39"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Alternate Investment Funds",
+      "HolderCount": "50",
+      "NoOfShares": "12434051",
+      "PctHolding": "0.30"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Foreign Portfolio Investors",
+      "HolderCount": "1369",
+      "NoOfShares": "1393161895",
+      "PctHolding": "33.17"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "GOVERNMENT PENSION FUND GLOBAL",
+      "HolderCount": "1",
+      "NoOfShares": "46455879",
+      "PctHolding": "1.10"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "VANGUARD TOTAL INTERNATIONAL STOCK INDEX FUND",
+      "HolderCount": "1",
+      "NoOfShares": "46405074",
+      "PctHolding": "1.10"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "VANGUARD EMERGING MARKETS STOCK INDEX FUND, A SERIES OF VANGUARD INTERNATIONAL EQUITY INDEX FUND",
+      "HolderCount": "1",
+      "NoOfShares": "49261330",
+      "PctHolding": "1.17"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "GOVERNMENT OF SINGAPORE",
+      "HolderCount": "1",
+      "NoOfShares": "76236467",
+      "PctHolding": "1.81"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Financial  Institutions/ Banks",
+      "HolderCount": "13",
+      "NoOfShares": "889247",
+      "PctHolding": "0.02"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Insurance  Companies",
+      "HolderCount": "33",
+      "NoOfShares": "134382049",
+      "PctHolding": "3.20"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "ICICI PRUDENTIAL LIFE INSURANCE COMPANY LIMITED",
+      "HolderCount": "1",
+      "NoOfShares": "43412724",
+      "PctHolding": "1.03"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Sub Total B1",
+      "HolderCount": "1503",
+      "NoOfShares": "2078810726",
+      "PctHolding": "49.48"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "B2) Central  Government/  State  Government(s)/ President of India",
+      "HolderCount": "0",
+      "NoOfShares": "0",
+      "PctHolding": "0.00"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "B3) Non-Institutions",
+      "HolderCount": "0",
+      "NoOfShares": "0",
+      "PctHolding": "0.00"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Individual share capital upto Rs. 2 Lacs",
+      "HolderCount": "1852825",
+      "NoOfShares": "263804494",
+      "PctHolding": "6.27"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Individual share capital in excess of Rs. 2 Lacs",
+      "HolderCount": "1364",
+      "NoOfShares": "182051872",
+      "PctHolding": "4.33"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "NBFCs registered with RBI",
+      "HolderCount": "24",
+      "NoOfShares": "1981897",
+      "PctHolding": "0.05"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Overseas Depositories (holding DRs) (balancing figure)",
+      "HolderCount": "1",
+      "NoOfShares": "723498719",
+      "PctHolding": "17.20"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "DEUTSCHE BANK TRUST COMPANY AMERICAS",
+      "HolderCount": "1",
+      "NoOfShares": "723498719",
+      "PctHolding": "17.20"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Any Other (specify)",
+      "HolderCount": "41443",
+      "NoOfShares": "386966360",
+      "PctHolding": "9.21"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Foreign Nationals",
+      "HolderCount": "6",
+      "NoOfShares": "6142",
+      "PctHolding": "0.00"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "IEPF",
+      "HolderCount": "1",
+      "NoOfShares": "279129",
+      "PctHolding": "0.01"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Bodies Corporate",
+      "HolderCount": "5078",
+      "NoOfShares": "36147146",
+      "PctHolding": "0.86"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "National Pension System Trust",
+      "HolderCount": "1",
+      "NoOfShares": "53871282",
+      "PctHolding": "1.28"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Life Insurance Corporation of India",
+      "HolderCount": "1",
+      "NoOfShares": "238502352",
+      "PctHolding": "5.67"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Qualified Institutional Buyer",
+      "HolderCount": "20",
+      "NoOfShares": "318990062",
+      "PctHolding": "7.58"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "FOREIGN BODIES-DR",
+      "HolderCount": "2",
+      "NoOfShares": "0",
+      "PctHolding": "0.01"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Overseas Corporate Bodies",
+      "HolderCount": "1",
+      "NoOfShares": "2560",
+      "PctHolding": "0.00"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Trusts",
+      "HolderCount": "96",
+      "NoOfShares": "1298688",
+      "PctHolding": "0.03"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Non-Resident Indian (NRI)",
+      "HolderCount": "36239",
+      "NoOfShares": "30242633",
+      "PctHolding": "0.72"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Sub Total B3",
+      "HolderCount": "1895657",
+      "NoOfShares": "1558303342",
+      "PctHolding": "37.06"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Public",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "B=B1+B2+B3",
+      "HolderCount": "1897160",
+      "NoOfShares": "3637114068",
+      "PctHolding": "86.54"
+    }
+  ],
+  "DiiHoldings": null,
+  "FiiHoldings": null,
+  "PromoterHoldings": [
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Individuals/Hindu undivided Family",
+      "HolderCount": "24",
+      "NoOfShares": "551682338",
+      "PctHolding": "551682338"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "NANDAN M NILEKANIPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "40783162",
+      "PctHolding": "40783162"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "N R NARAYANA MURTHYPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "16645638",
+      "PctHolding": "16645638"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "S GOPALAKRISHNANPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "41853808",
+      "PctHolding": "41853808"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "ASHA DINESHPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "38579304",
+      "PctHolding": "38579304"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "DINESH KRISHNASWAMYPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "32479590",
+      "PctHolding": "32479590"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "ROHINI NILEKANIPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "34335092",
+      "PctHolding": "34335092"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "SUDHA GOPALAKRISHNANPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "95357000",
+      "PctHolding": "95357000"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "AKSHATA MURTYPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "38957096",
+      "PctHolding": "38957096"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "S D SHIBULALPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "5814733",
+      "PctHolding": "5814733"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "SUDHA N MURTYPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "34550626",
+      "PctHolding": "34550626"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "JANHAVI NILEKANIPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "8589721",
+      "PctHolding": "8589721"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "KUMARI SHIBULALPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "5248965",
+      "PctHolding": "5248965"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "NIHAR NILEKANIPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "12677752",
+      "PctHolding": "12677752"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "ROHAN MURTYPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "60812892",
+      "PctHolding": "60812892"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "GAURAV MANCHANDAPromoter Group",
+      "HolderCount": "1",
+      "NoOfShares": "13736226",
+      "PctHolding": "13736226"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "DEEKSHA DINESHPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "7646684",
+      "PctHolding": "7646684"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "DIVYA DINESHPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "7646684",
+      "PctHolding": "7646684"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "MEGHANA GOPALAKRISHNANPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "4834928",
+      "PctHolding": "4834928"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "SHRUTI SHIBULALPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "2737538",
+      "PctHolding": "2737538"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "SHRAY  CHANDRAPromoter Group",
+      "HolderCount": "1",
+      "NoOfShares": "719424",
+      "PctHolding": "719424"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "SHREYAS SHIBULALPromoter",
+      "HolderCount": "1",
+      "NoOfShares": "23704350",
+      "PctHolding": "23704350"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "TANUSH NILEKANI CHANDRAPromoter Group",
+      "HolderCount": "1",
+      "NoOfShares": "3356017",
+      "PctHolding": "3356017"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "MILAN SHIBULAL MANCHANDAPromoter Group",
+      "HolderCount": "1",
+      "NoOfShares": "13935868",
+      "PctHolding": "13935868"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "BHAIRAVI MADHUSUDHAN SHIBULALPromoter Group",
+      "HolderCount": "1",
+      "NoOfShares": "6679240",
+      "PctHolding": "6679240"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "Sub Total A1",
+      "HolderCount": "24",
+      "NoOfShares": "551682338",
+      "PctHolding": "551682338"
+    },
+    {
+      "TypeCd": "2",
+      "TypeName": "Promoter",
+      "Qtr": "FY22Q4",
+      "BseScripId": "500209",
+      "CategoryName": "A=A1+A2",
+      "HolderCount": "24",
+      "NoOfShares": "551682338",
+      "PctHolding": "551682338"
+    }
+  ]
+}
