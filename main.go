@@ -7,10 +7,11 @@ const usage = `Usage:
 
 // for testing, comment out when not needed
 func main() {
-	holdings := getShareholdingQtr("500209", "FY22Q4")
-	JsonToCsv(holdings, "testdata/500209-fy22q4-validdatacase.json")
-	holdings = getShareholdingQtr("500209", "FY16Q2")
-	JsonToCsv(holdings, "testdata/500209-fy16q2-blankcase.json")
+	// holdings := getShareholdingQtr("500209", "FY22Q4")
+	// JsonToCsv(holdings, "testdata/500209-fy22q4-validdatacase.json")
+	// holdings = getShareholdingQtr("500209", "FY16Q2")
+	// JsonToCsv(holdings, "testdata/500209-fy16q2-blankcase.json")
+	GetRecentShareholdings("500209", 28)
 }
 
 // func main() {

@@ -9,9 +9,33 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-// Gets QTR STring based on curent datetime
-// Warning: This function return the last completed qtr
-// (( For whch results/documents will be avalable
+// returns a slice of qtr ids ( last numOfQtrs )
+func getQtrIds(lastQtrId int, noOfQtrs int) []int {
+	firstQtrId := lastQtrId - noOfQtrs
+	r := make([]int, firstQtrId-lastQtrId+1)
+	for i := range r {
+		r[i] = firstQtrId + i
+	}
+
+	return r
+}
+
+// Returns the BSE qtrid for last 7 years. Latest qtr will be the last completed qtr as of today
+func getLatestQtrId() int {
+	today := time.Now()
+	year := int(today.Year()) % 100 // 2 digit year
+	month := int(today.Month())
+
+	latest_id := 3 + year*5 + month
+
+	return latest_id
+}
+
+/*
+Returns QtrString based on curent datetime
+Warning: This function return the last completed qtr
+The documents would be availabe for the last completed qtr
+*/
 func getLatestQtrString() string {
 	today := time.Now()
 	year := int(today.Year()) % 100 // 2 digit year
@@ -143,7 +167,7 @@ func getPromoterShareholding(bse_scrip_id string, qtrid int, qtr_string string) 
 }
 
 // parse shareholding category page
-func ParseCategory(bse_scrip_id string, qtr_string string, doc *goquery.Document) []ShareholdingLineItem {
+func ParseOverview(bse_scrip_id string, qtr_string string, doc *goquery.Document) []ShareholdingLineItem {
 	var categories []ShareholdingLineItem
 	// Find the review items
 	doc.Find("#tdData > table > tbody > tr:nth-child(5) > td > table > tbody > tr").Each(func(i int, s *goquery.Selection) {
@@ -175,12 +199,12 @@ func ParseCategory(bse_scrip_id string, qtr_string string, doc *goquery.Document
 
 // get shareholding data for a bse listed company
 // earliest available  qtr string for infy : 88: FY16Q3 - for dec2015
-func getShareholdingQtr(bse_scrip_id string, qtr_string string) ShareholdingQtr {
+func getShareholdingQtr(bse_scrip_id string, qtrid int) ShareholdingQtr {
 	// https://www.bseindia.com/corporates/shpSecurities.aspx?scripcd=500209&qtrid=115.00&Flag=New
 
 	holdingQtr := ShareholdingQtr{}
 
-	qtrid := getShareholdingQtrId(qtr_string)
+	// qtrid := getShareholdingQtrId(qtr_string)
 	url_string := "https://www.bseindia.com/corporates/shpSecurities.aspx?scripcd=%s&qtrid=%d.00&Flag=New"
 	url := fmt.Sprintf(url_string, bse_scrip_id, qtrid)
 
@@ -192,13 +216,17 @@ func getShareholdingQtr(bse_scrip_id string, qtr_string string) ShareholdingQtr 
 		log.Fatal(err)
 	}
 
+	// TODO: Decide which is it going to be
+	qtr_string := string(qtrid)
+
 	// Initialized struct
+
 	holdingQtr.QtrString = qtr_string
 	holdingQtr.BseScripId = bse_scrip_id
 
 	// check if shareholding data is avilable for the quarter
 	if doc.Find("#tdData > table > tbody > tr:nth-child(5) > td > table > tbody > tr").Length() > 0 {
-		overview_holdings := ParseCategory(bse_scrip_id, qtr_string, doc)
+		overview_holdings := ParseOverview(bse_scrip_id, qtr_string, doc)
 		promoter_holdings := getPromoterShareholding(bse_scrip_id, qtrid, qtr_string)
 		public_holdings, dii_holdings, fii_holdings := getPublicShareholding(bse_scrip_id, qtrid, qtr_string)
 
@@ -219,12 +247,15 @@ func getShareholdingQtr(bse_scrip_id string, qtr_string string) ShareholdingQtr 
 
 // returns sharehokding for the co for latest published qtr
 func getLatestShareholding(bse_scrip_id string) ShareholdingQtr {
-	return getShareholdingQtr(bse_scrip_id, getLatestQtrString())
+	return getShareholdingQtr(bse_scrip_id, getLatestQtrId())
 }
 
 // Get the comapny share holding data for last 7 years
-func GetRecentShareholdings(bse_scrip_id string) ShareHoldings {
+func GetRecentShareholdings(bse_scrip_id string, noOfQtrs int) ShareHoldings {
 	companyShareHoldings := make(ShareHoldings)
+
+	qtrIds := getQtrIds(getLatestQtrId(), noOfQtrs)
+	fmt.Print(qtrIds)
 
 	return companyShareHoldings
 }
