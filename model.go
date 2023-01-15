@@ -17,7 +17,7 @@ type CsvCompatibleType interface {
 
 // These Struct can be saved as json
 type JsonCompatibleType interface {
-	ShareholdingQtr | ShareholdingLineItem | ShareHoldings
+	ShareholdingQtr | ShareholdingLineItem | Shareholdings
 }
 
 // ##################################### Generic ####################################
@@ -143,9 +143,17 @@ type ShareholdingQtr struct {
 }
 
 // This struct stores shareholdings of a company across quarters
-type ShareHoldings map[string]ShareholdingQtr
+type Shareholdings struct {
+	BseScripId string
+	holdings   []ShareholdingQtr
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+}
 
-// Stores Shareholding struct to database
-// To save Shareholdings, run this function in a loop
-func SaveShareHoldingQtr(holdingQtr ShareholdingQtr) {
+// Gets a company's shareholdings from database
+func GetRecentShareholdingsDb(holdings Shareholdings) {
+}
+
+// Stores a slice of Shareholding struct to database
+func SaveRecentShareholdingsDb(holdingQtr Shareholdings) {
 }

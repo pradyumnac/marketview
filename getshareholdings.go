@@ -173,14 +173,14 @@ func getLatestShareholding(bse_scrip_id string) ShareholdingQtr {
 }
 
 // Get the comapny share holding data for last 7 years
-func GetRecentShareholdings(bse_scrip_id string, noOfQtrs int) ShareHoldings {
-	companyShareHoldings := make(ShareHoldings)
+func FetchRecentShareholdings(bse_scrip_id string, noOfQtrs int) Shareholdings {
+	companyShareHoldings := Shareholdings{}
 
 	qtrIds := getLastNQtrids(getLatestQtrId(), noOfQtrs)
 	for qtrid := range qtrIds {
 		// apply wait group here
 		qtrid_string := fmt.Sprintf("%d", qtrIds[qtrid])
-		companyShareHoldings[qtrid_string] = getShareholdingQtr(bse_scrip_id, qtrid_string)
+		companyShareHoldings.holdings = append(companyShareHoldings.holdings, getShareholdingQtr(bse_scrip_id, qtrid_string))
 	}
 
 	// waitgroup wait

@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 const usage = `Usage:
   -v, --verbose verbose output
   -h, --help prints help information 
@@ -11,8 +13,9 @@ func main() {
 	// JsonToCsv(holdings, "testdata/500209-fy22q4-validdatacase.json")
 	// holdings = getShareholdingQtr("500209", "FY16Q2")
 	// JsonToCsv(holdings, "testdata/500209-fy16q2-blankcase.json")
-	holdings := GetRecentShareholdings("500209", 8)
-	JsonToCsv(holdings, "testdata/500209-8-14012023")
+	holdings := FetchRecentShareholdings("500209", 28)
+	size := fmt.Sprintf("%d", len(holdings.holdings))
+	StructToJson(holdings, "testdata/500209-"+size+"-14012023.json")
 }
 
 // func main() {

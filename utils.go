@@ -35,7 +35,7 @@ func CheckErr(err error) {
 
 // Convert any Struct (JSON Compatible) to JSON
 // TODO: remove ny and implement type constraints
-func JsonToCsv(structForJson any, jsonFilePath string) {
+func StructToJson(structForJson any, jsonFilePath string) {
 	jsonStr, err := json.MarshalIndent(structForJson, "", "  ")
 	CheckErr(err)
 
