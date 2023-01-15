@@ -179,13 +179,38 @@ func FetchRecentShareholdings(bse_scrip_id string, noOfQtrs int, db *gorm.DB) Sh
 	companyShareHoldings.BseScripId = bse_scrip_id
 
 	qtrIds := getLastNQtrids(getLatestQtrId(), noOfQtrs)
-	for qtrid := range qtrIds {
-		// apply wait group here
-		qtrid_string := fmt.Sprintf("%d", qtrIds[qtrid])
-		companyShareHoldings.Holdings = append(companyShareHoldings.Holdings, getShareholdingQtr(bse_scrip_id, qtrid_string))
+
+	// channel for ipc across spawned child routines
+	chanCompanyShareholdings := make(chan ShareholdingQtr, noOfQtrs)
+	for index, qtrid := range qtrIds {
+		qtrid_string := fmt.Sprintf("%d", qtrid)
+
+		// Send results from goroutines over hannels
+		go func(bse_scrip_id string, qtrid_string string, index int) {
+			var isLast bool
+			// if index == (noOfQtrs - 1) {
+			// 	isLast = true
+			// }
+			// log.Printf("Fetch Start: %d", index)
+			chanCompanyShareholdings <- getShareholdingQtr(bse_scrip_id, qtrid_string)
+			if isLast {
+				close(chanCompanyShareholdings)
+			}
+			// log.Printf("Fetch Done: %d", index)
+		}(bse_scrip_id, qtrid_string, index)
 	}
 
-	// waitgroup wait
+	// Consume ShareholdingQtr from go routine above. Loop runs till channel is empty
+	// Close only if noOfQtrs have been received
+	var index_received int
+	for h := range chanCompanyShareholdings {
+		companyShareHoldings.Holdings = append(companyShareHoldings.Holdings, h)
+		log.Printf("Appended %s", companyShareHoldings.BseScripId)
+		index_received += 1
+		if index_received == 28 {
+			close(chanCompanyShareholdings)
+		}
+	}
 
 	// save to db
 	if db != nil {
