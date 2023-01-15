@@ -12,6 +12,7 @@ func main() {
 	holdings := FetchRecentShareholdings("500209", 28, nil) // nill db will skip db step
 	size := fmt.Sprintf("%d", len(holdings.Holdings))
 	StructToJson(holdings, "testdata/500209-"+size+"-14012023.json")
+	fmt.Printf("%s records written", size)
 }
 
 //func main() {
