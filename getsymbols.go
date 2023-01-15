@@ -90,16 +90,22 @@ func FetchSymbols(db *gorm.DB) []SymbolsMapping {
 	symbols_bse := FetchBseSymbols()
 	// bse_symbols_filepath := path.Join(symbols_data_dir, "bse.csv")
 	// SaveBseSymbolstoCsv(symbols_bse, bse_symbols_filepath)
-	SaveBseSymbols(symbols_bse, db)
+	if db != nil {
+		SaveBseSymbols(symbols_bse, db)
+	}
 
 	symbols_nse := FetchNseSymbols()
 	// nse_symbols_filepath := path.Join(symbols_data_dir, "nse.csv")
 	// SaveNseSymbolstoCsv(symbols_nse, nse_symbols_filepath)
-	SaveNseSymbols(symbols_nse, db)
+	if db != nil {
+		SaveNseSymbols(symbols_nse, db)
+	}
 
 	// build mappings
 	mappings := BuildBseNseSymbolMaps(db)
-	SaveMappings(mappings, db)
+	if db != nil {
+		SaveMappings(mappings, db)
+	}
 
 	return mappings
 }

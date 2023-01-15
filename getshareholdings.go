@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"gorm.io/gorm"
 )
 
 // Get shareholding breakup for Non Promoters
@@ -15,7 +16,7 @@ func getPublicShareholding(bse_scrip_id string, qtrid_string string) ([]Sharehol
 	var fii_holdings []ShareholdingLineItem
 
 	// qtrid := getShareholdingQtrId(qtr_string)
-	url_string := "https://www.bseindia.com/corporates/shpPublicShareholder.aspx?scripcd=%s&qtrid=%d"
+	url_string := "https://www.bseindia.com/corporates/shpPublicShareholder.aspx?scripcd=%s&qtrid=%s.00"
 	url := fmt.Sprintf(url_string, bse_scrip_id, qtrid_string)
 
 	res := FetchResBody(url)
@@ -57,7 +58,7 @@ func getPromoterShareholding(bse_scrip_id string, qtrid_string string) []Shareho
 	var promoter_holdings []ShareholdingLineItem
 
 	// qtrid := getShareholdingQtrId(qtr_string)
-	url_string := "https://www.bseindia.com/corporates/shpPromoterNGroup.aspx?scripcd=%s&qtrid=%s"
+	url_string := "https://www.bseindia.com/corporates/shpPromoterNGroup.aspx?scripcd=%s&qtrid=%s.00"
 	url := fmt.Sprintf(url_string, bse_scrip_id, qtrid_string)
 
 	res := FetchResBody(url)
@@ -173,17 +174,23 @@ func getLatestShareholding(bse_scrip_id string) ShareholdingQtr {
 }
 
 // Get the comapny share holding data for last 7 years
-func FetchRecentShareholdings(bse_scrip_id string, noOfQtrs int) Shareholdings {
+func FetchRecentShareholdings(bse_scrip_id string, noOfQtrs int, db *gorm.DB) Shareholdings {
 	companyShareHoldings := Shareholdings{}
+	companyShareHoldings.BseScripId = bse_scrip_id
 
 	qtrIds := getLastNQtrids(getLatestQtrId(), noOfQtrs)
 	for qtrid := range qtrIds {
 		// apply wait group here
 		qtrid_string := fmt.Sprintf("%d", qtrIds[qtrid])
-		companyShareHoldings.holdings = append(companyShareHoldings.holdings, getShareholdingQtr(bse_scrip_id, qtrid_string))
+		companyShareHoldings.Holdings = append(companyShareHoldings.Holdings, getShareholdingQtr(bse_scrip_id, qtrid_string))
 	}
 
 	// waitgroup wait
+
+	// save to db
+	if db != nil {
+		SaveRecentShareholdingsDb(companyShareHoldings, db)
+	}
 
 	return companyShareHoldings
 }

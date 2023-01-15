@@ -29,7 +29,7 @@ func GetDB(db_path string) *gorm.DB {
 	CheckErr(err)
 
 	// Migrate the schema
-	db.AutoMigrate(&NseSymbol{}, &BseSymbol{}, &SymbolsMapping{})
+	db.AutoMigrate(&NseSymbol{}, &BseSymbol{}, &SymbolsMapping{}, &Shareholdings{}, &ShareholdingQtr{}, &ShareholdingLineItem{})
 
 	return db
 }
@@ -121,39 +121,52 @@ func SaveMappings(mappings []SymbolsMapping, db *gorm.DB) {
 
 // this stores a single line item of shareholding data
 type ShareholdingLineItem struct {
-	TypeCd       string
-	TypeName     string
-	QtrId        string
-	BseScripId   string
-	CategoryName string
-	HolderCount  string
-	NoOfShares   string
-	PctHolding   string
+	TypeCd               string `gorm:"primaryKey" json:"type_cd"`
+	TypeName             string `json:"type_name"`
+	QtrId                string `gorm:"primaryKey" json:"qtrid"`
+	BseScripId           string `gorm:"primaryKey" json:"bse_scrip_id"`
+	CategoryName         string `json:"category"`
+	HolderCount          string `json:"holder_count"`
+	NoOfShares           string `json:"no_of_shares"`
+	PctHolding           string `json:"pct_holding"`
+	ShareholdingQtrRefer uint
+	CreatedAt            time.Time
+	UpdatedAt            time.Time
 }
 
 // This struct can store a company's shareholding for a quarter
 type ShareholdingQtr struct {
-	BseScripId       string
-	QtrId            string
-	OverviewHoldings []ShareholdingLineItem
-	PublicHoldings   []ShareholdingLineItem
-	DiiHoldings      []ShareholdingLineItem
-	FiiHoldings      []ShareholdingLineItem
-	PromoterHoldings []ShareholdingLineItem
+	BseScripId        string                 `gorm:"primaryKey" json:"bse_scrip_id"`
+	QtrId             string                 `gorm:"primaryKey" json:"qtrid"`
+	OverviewHoldings  []ShareholdingLineItem `gorm:"foreignKey:ShareholdingQtrRefer" json:"overview"`
+	PublicHoldings    []ShareholdingLineItem `gorm:"foreignKey:ShareholdingQtrRefer" json:"public"`
+	DiiHoldings       []ShareholdingLineItem `gorm:"foreignKey:ShareholdingQtrRefer" json:"dii"`
+	FiiHoldings       []ShareholdingLineItem `gorm:"foreignKey:ShareholdingQtrRefer" json:"fii"`
+	PromoterHoldings  []ShareholdingLineItem `gorm:"foreignKey:ShareholdingQtrRefer" json:"promoter"`
+	ShareholdingRefer uint
+	CreatedAt         time.Time
+	UpdatedAt         time.Time
 }
 
 // This struct stores shareholdings of a company across quarters
 type Shareholdings struct {
-	BseScripId string
-	holdings   []ShareholdingQtr
+	BseScripId string            `gorm:"primayKey" json:"bse_scrip_id"`
+	Holdings   []ShareholdingQtr `gorm:"foreignKey:ShareholdingRefer" json:"holdings"`
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
 
 // Gets a company's shareholdings from database
-func GetRecentShareholdingsDb(holdings Shareholdings) {
+func GetRecentShareholdingsDb(holdings Shareholdings, db *gorm.DB) {
 }
 
 // Stores a slice of Shareholding struct to database
-func SaveRecentShareholdingsDb(holdingQtr Shareholdings) {
+func SaveRecentShareholdingsDb(holdings Shareholdings, db *gorm.DB) {
+	// Insert data a fresh
+	result := db.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "isin"}}, // key colume
+		DoNothing: true,
+	}).CreateInBatches(holdings, 1000)
+
+	log.Printf("Added %d shareholdings for %s", result.RowsAffected, holdings.BseScripId)
 }
