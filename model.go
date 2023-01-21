@@ -121,44 +121,36 @@ func SaveMappings(mappings []SymbolsMapping, db *gorm.DB) {
 
 // this stores a single line item of shareholding data
 type ShareholdingLineItem struct {
-	TypeCd                   string `gorm:"primaryKey;autoIncrement:false" json:"type_cd"`
-	TypeName                 string `json:"type_name"`
-	QtrId                    string `gorm:"primaryKey;autoIncrement:false" json:"qtrid"`
-	BseScripId               string `gorm:"primaryKey;autoIncrement:false" json:"bse_scrip_id"`
-	CategoryName             string `json:"category"`
-	HolderCount              string `json:"holder_count"`
-	NoOfShares               string `json:"no_of_shares"`
-	PctHolding               string `json:"pct_holding"`
-	overviewHoldingItemRefer uint
-	publicHoldingRefer       uint
-	diiHoldingRefer          uint
-	fiiHoldingRefer          uint
-	promoterHoldingRefer     uint
-	CreatedAt                time.Time
-	UpdatedAt                time.Time
+	gorm.Model
+	TypeCd            string `json:"type_cd"`
+	TypeName          string `json:"type_name"`
+	QtrId             string `json:"qtrid"`
+	BseScripId        string `json:"bse_scrip_id"`
+	CategoryName      string `json:"category"`
+	HolderCount       string `json:"holder_count"`
+	NoOfShares        string `json:"no_of_shares"`
+	PctHolding        string `json:"pct_holding"`
+	ShareholdingQtrID uint
 }
 
 // This struct can store a company's shareholding for a quarter
 type ShareholdingQtr struct {
-	ID                uint
-	BseScripId        string                 `gorm:"primaryKey;autoIncrement:false" json:"bse_scrip_id"`
-	QtrId             string                 `gorm:"primaryKey;autoIncrement:false" json:"qtrid"`
-	OverviewHoldings  []ShareholdingLineItem `gorm:"foreignKey:overviewHoldingItemRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"overview"`
-	PublicHoldings    []ShareholdingLineItem `gorm:"foreignKey:publicHoldingRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"public"`
-	DiiHoldings       []ShareholdingLineItem `gorm:"foreignKey:diiHoldingRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"dii"`
-	FiiHoldings       []ShareholdingLineItem `gorm:"foreignKey:fiiHoldingRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"fii"`
-	PromoterHoldings  []ShareholdingLineItem `gorm:"foreignKey:promoterHoldingRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"promoter"`
-	ShareholdingRefer uint
-	CreatedAt         time.Time
-	UpdatedAt         time.Time
+	gorm.Model
+	BseScripId       string                 `json:"bse_scrip_id"`
+	QtrId            string                 `json:"qtrid"`
+	OverviewHoldings []ShareholdingLineItem `json:"overview"`
+	PublicHoldings   []ShareholdingLineItem `json:"public"`
+	DiiHoldings      []ShareholdingLineItem `json:"dii"`
+	FiiHoldings      []ShareholdingLineItem `json:"fii"`
+	PromoterHoldings []ShareholdingLineItem `json:"promoter"`
+	ShareholdingsID  uint
 }
 
 // This struct stores shareholdings of a company across quarters
 type Shareholdings struct {
-	BseScripId string            `gorm:"primayKey;autoIncrement:false" json:"bse_scrip_id"`
-	Holdings   []ShareholdingQtr `gorm:"foreignKey:ShareholdingRefer" json:"holdings"`
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
+	gorm.Model
+	BseScripId string            `gorm:"unique" json:"bse_scrip_id"`
+	Holdings   []ShareholdingQtr `json:"holdings"`
 }
 
 // Gets a company's shareholdings from database
@@ -169,9 +161,12 @@ func GetRecentShareholdingsDb(holdings Shareholdings, db *gorm.DB) {
 func SaveRecentShareholdingsDb(holdings Shareholdings, db *gorm.DB) {
 	// Insert data a fresh
 	result := db.Clauses(clause.OnConflict{
-		Columns:   []clause.Column{{Name: "bse_scrip_id"}}, // key colume
-		DoNothing: true,
-	}).CreateInBatches(holdings, 1000)
+		UpdateAll: true,
+	}).Create(&holdings)
 
-	log.Printf("Added %d shareholdings for %s", result.RowsAffected, holdings.BseScripId)
+	if result.Error != nil {
+		log.Fatalf("Error: Unable to save record to database: %s", result.Error)
+	} else {
+		log.Printf("Added %d shareholdings for %s", result.RowsAffected, holdings.BseScripId)
+	}
 }

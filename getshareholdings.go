@@ -207,7 +207,7 @@ func FetchRecentShareholdings(bse_scrip_id string, noOfQtrs int, db *gorm.DB) Sh
 		companyShareHoldings.Holdings = append(companyShareHoldings.Holdings, h)
 		// log.Printf("Appended %s", companyShareHoldings.BseScripId)
 		index_received += 1
-		if index_received == 28 {
+		if index_received == noOfQtrs {
 			close(chanCompanyShareholdings)
 		}
 	}
