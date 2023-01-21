@@ -154,7 +154,38 @@ type Shareholdings struct {
 }
 
 // Gets a company's shareholdings from database
-func GetRecentShareholdingsDb(holdings Shareholdings, db *gorm.DB) {
+func ViewRecentShareholdingsDb(bse_scrip_id string, db *gorm.DB) [][]string {
+	// companyData := Shareholdings{}
+	// Optimise for amount of data typically present
+	// TODO: Optimsation- append realloc call vs memory space
+	holdings := make([]ShareholdingLineItem, 0, 500)
+	strHoldings := make([][]string, 0, 500)
+
+	err := db.Where(&ShareholdingLineItem{
+		BseScripId: bse_scrip_id,
+	}).Select("type_name", "bse_scrip_id", "qtr_id", "category_name", "holder_count", "no_of_shares", "pct_holding").Find(&holdings).Error
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, i := range holdings {
+		strHoldings = append(strHoldings, []string{
+			i.TypeName, i.CategoryName, i.QtrId, i.HolderCount, i.NoOfShares, i.PctHolding,
+		})
+	}
+	// for _, q := range companyData.Holdings {
+	// 	for _, i := range q.OverviewHoldings {
+	// 		holdings = append(holdings, i)
+	// 	}
+	// 	for _, i := range q.PromoterHoldings {
+	// 		holdings = append(holdings, i)
+	// 	}
+	// 	for _, i := range q.PublicHoldings {
+	// 		holdings = append(holdings, i)
+	// 	}
+	// }
+
+	return strHoldings
 }
 
 // Stores a slice of Shareholding struct to database

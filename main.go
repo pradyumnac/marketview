@@ -1,8 +1,8 @@
 package main
 
 import (
+	"encoding/csv"
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"path"
@@ -24,7 +24,7 @@ import (
 // }
 
 func main() {
-	fmt.Println("##### Marketview v0.1 #####")
+	// fmt.Println("##### Marketview v0.1 #####")
 
 	var flagFetchSymbols, flagViewSymbols bool
 	var flagFetchShareholding, flagViewShareHolding string
@@ -47,9 +47,9 @@ func main() {
 	db := GetDB(dbFilepath)
 
 	// // ############## Testing code here ##################
-	// bseScripId := "500209"
-	// noOfQtrs := 2
-	// FetchRecentShareholdings(bseScripId, noOfQtrs, db)
+	// holdings := ViewRecentShareholdingsDb("500209", db)
+	// log.Print(holdings)
+	// os.Exit(1)
 	// // ############# Testing Code Ends ###################
 
 	// Controller logic
@@ -60,7 +60,7 @@ func main() {
 	} else if flagViewSymbols {
 
 		mappings := GetSymbolsMappingDB(db)
-		err := gocsv.MarshalFile(mappings, os.Stdout)
+		err := gocsv.MarshalCSVWithoutHeaders(mappings, csv.NewWriter(os.Stdout))
 		CheckErr(err)
 		return
 	} else if len(flagFetchShareholding) > 0 {
@@ -69,8 +69,12 @@ func main() {
 		FetchRecentShareholdings(flagFetchShareholding, 28, db)
 		return
 	} else if len(flagViewShareHolding) > 0 {
-		log.Println("Not Implemented yet")
-		os.Exit(1)
+		// log.Println("Not Implemented yet")
+		// os.Exit(1)
+		holdings := ViewRecentShareholdingsDb(flagViewShareHolding, db)
+		// log.Print(holdings)
+		csv.NewWriter(os.Stdout).WriteAll(holdings)
+		return
 	}
 	// No arguments matched
 	log.Println("Error! No arguments specified.")
