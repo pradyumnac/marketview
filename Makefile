@@ -11,7 +11,8 @@ clean:
 	@echo "Clean Done"
 
 build:
-	@go build -ldflags "-s -w" .
+	# @go build -ldflags "-s -w" .
+	@go build  .
 	@echo "Build Done"
 
 install: 
