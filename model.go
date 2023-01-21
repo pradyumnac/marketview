@@ -138,11 +138,11 @@ type ShareholdingQtr struct {
 	gorm.Model
 	BseScripId       string                 `json:"bse_scrip_id"`
 	QtrId            string                 `json:"qtrid"`
-	OverviewHoldings []ShareholdingLineItem `json:"overview"`
-	PublicHoldings   []ShareholdingLineItem `json:"public"`
-	DiiHoldings      []ShareholdingLineItem `json:"dii"`
-	FiiHoldings      []ShareholdingLineItem `json:"fii"`
-	PromoterHoldings []ShareholdingLineItem `json:"promoter"`
+	OverviewHoldings []ShareholdingLineItem `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"overview"`
+	PublicHoldings   []ShareholdingLineItem `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"public"`
+	DiiHoldings      []ShareholdingLineItem `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"dii"`
+	FiiHoldings      []ShareholdingLineItem `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"fii"`
+	PromoterHoldings []ShareholdingLineItem `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"promoter"`
 	ShareholdingsID  uint
 }
 
@@ -150,7 +150,7 @@ type ShareholdingQtr struct {
 type Shareholdings struct {
 	gorm.Model
 	BseScripId string            `gorm:"unique" json:"bse_scrip_id"`
-	Holdings   []ShareholdingQtr `json:"holdings"`
+	Holdings   []ShareholdingQtr `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"holdings"`
 }
 
 // Gets a company's shareholdings from database
@@ -161,6 +161,7 @@ func GetRecentShareholdingsDb(holdings Shareholdings, db *gorm.DB) {
 func SaveRecentShareholdingsDb(holdings Shareholdings, db *gorm.DB) {
 	// Insert data a fresh
 	result := db.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "bse_scrip_id"}},
 		UpdateAll: true,
 	}).Create(&holdings)
 

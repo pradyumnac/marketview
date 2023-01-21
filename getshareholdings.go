@@ -173,7 +173,7 @@ func getLatestShareholding(bse_scrip_id string) ShareholdingQtr {
 	return getShareholdingQtr(bse_scrip_id, qtrid_string)
 }
 
-// Get the comapny share holding data for last 7 years
+// Get the comapny share holding data for last <noOfQtrs> quarters
 func FetchRecentShareholdings(bse_scrip_id string, noOfQtrs int, db *gorm.DB) Shareholdings {
 	companyShareHoldings := Shareholdings{}
 	companyShareHoldings.BseScripId = bse_scrip_id
@@ -214,7 +214,7 @@ func FetchRecentShareholdings(bse_scrip_id string, noOfQtrs int, db *gorm.DB) Sh
 
 	// save to db
 	if db != nil {
-		log.Print("Saving to DB.")
+		// log.Print("Saving to DB.")
 		SaveRecentShareholdingsDb(companyShareHoldings, db)
 	}
 
