@@ -23,9 +23,9 @@ type JsonCompatibleType interface {
 // ##################################### Generic ####################################
 
 // FB factory
-func GetDB(db_path string) *gorm.DB {
+func GetDB(dbPath string) *gorm.DB {
 	// Connect to database
-	db, err := gorm.Open(sqlite.Open(db_path), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
+	db, err := gorm.Open(sqlite.Open(dbPath), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
 	CheckErr(err)
 
 	// Migrate the schema
@@ -121,21 +121,21 @@ func SaveMappings(mappings []SymbolsMapping, db *gorm.DB) {
 
 // this stores a single line item of shareholding data
 type ShareholdingLineItem struct {
-	TypeCd               string `gorm:"primaryKey;autoIncrement:false" json:"type_cd"`
-	TypeName             string `json:"type_name"`
-	QtrId                string `gorm:"primaryKey;autoIncrement:false" json:"qtrid"`
-	BseScripId           string `gorm:"primaryKey;autoIncrement:false" json:"bse_scrip_id"`
-	CategoryName         string `json:"category"`
-	HolderCount          string `json:"holder_count"`
-	NoOfShares           string `json:"no_of_shares"`
-	PctHolding           string `json:"pct_holding"`
-	overviewHoldingRefer uint
-	publicHoldingRefer   uint
-	diiHoldingRefer      uint
-	fiiHoldingRefer      uint
-	promoterHoldingRefer uint
-	CreatedAt            time.Time
-	UpdatedAt            time.Time
+	TypeCd                   string `gorm:"primaryKey;autoIncrement:false" json:"type_cd"`
+	TypeName                 string `json:"type_name"`
+	QtrId                    string `gorm:"primaryKey;autoIncrement:false" json:"qtrid"`
+	BseScripId               string `gorm:"primaryKey;autoIncrement:false" json:"bse_scrip_id"`
+	CategoryName             string `json:"category"`
+	HolderCount              string `json:"holder_count"`
+	NoOfShares               string `json:"no_of_shares"`
+	PctHolding               string `json:"pct_holding"`
+	overviewHoldingItemRefer uint
+	publicHoldingRefer       uint
+	diiHoldingRefer          uint
+	fiiHoldingRefer          uint
+	promoterHoldingRefer     uint
+	CreatedAt                time.Time
+	UpdatedAt                time.Time
 }
 
 // This struct can store a company's shareholding for a quarter
@@ -143,11 +143,11 @@ type ShareholdingQtr struct {
 	ID                uint
 	BseScripId        string                 `gorm:"primaryKey;autoIncrement:false" json:"bse_scrip_id"`
 	QtrId             string                 `gorm:"primaryKey;autoIncrement:false" json:"qtrid"`
-	OverviewHoldings  []ShareholdingLineItem `gorm:"foreignKey:overviewHoldingRefer,references:ID" json:"overview"`
-	PublicHoldings    []ShareholdingLineItem `gorm:"foreignKey:publicHoldingRefer" json:"public"`
-	DiiHoldings       []ShareholdingLineItem `gorm:"foreignKey:diiHoldingRefer" json:"dii"`
-	FiiHoldings       []ShareholdingLineItem `gorm:"foreignKey:fiiHoldingRefer" json:"fii"`
-	PromoterHoldings  []ShareholdingLineItem `gorm:"foreignKey:promoterHoldingRefer" json:"promoter"`
+	OverviewHoldings  []ShareholdingLineItem `gorm:"foreignKey:overviewHoldingItemRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"overview"`
+	PublicHoldings    []ShareholdingLineItem `gorm:"foreignKey:publicHoldingRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"public"`
+	DiiHoldings       []ShareholdingLineItem `gorm:"foreignKey:diiHoldingRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"dii"`
+	FiiHoldings       []ShareholdingLineItem `gorm:"foreignKey:fiiHoldingRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"fii"`
+	PromoterHoldings  []ShareholdingLineItem `gorm:"foreignKey:promoterHoldingRefer;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"promoter"`
 	ShareholdingRefer uint
 	CreatedAt         time.Time
 	UpdatedAt         time.Time

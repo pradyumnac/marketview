@@ -34,14 +34,14 @@ func main() {
 	// 	flag.Parse()
 	// 	// General Config
 	_, data_dir := GetConfig()
-	symbols_data_dir := path.Join(data_dir, "symbols")
-	os.MkdirAll(symbols_data_dir, 0o700)
-	db_filepath := path.Join(symbols_data_dir, "data.db")
-	db := GetDB(db_filepath)
+	symbolsDataDir := path.Join(data_dir, "symbols")
+	os.MkdirAll(symbolsDataDir, 0o700)
+	dbFilepath := path.Join(symbolsDataDir, "data.db")
+	db := GetDB(dbFilepath)
 	// ############## Testing code here ##################
-	bse_scrip_id := "500209"
+	bseScripId := "500209"
 	noOfQtrs := 2
-	FetchRecentShareholdings(bse_scrip_id, noOfQtrs, db)
+	FetchRecentShareholdings(bseScripId, noOfQtrs, db)
 	// ############# Testing Code Ends ###################
 	// // Controller logc
 	//

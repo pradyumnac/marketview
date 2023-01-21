@@ -214,6 +214,7 @@ func FetchRecentShareholdings(bse_scrip_id string, noOfQtrs int, db *gorm.DB) Sh
 
 	// save to db
 	if db != nil {
+		log.Print("Saving to DB.")
 		SaveRecentShareholdingsDb(companyShareHoldings, db)
 	}
 
