@@ -8,11 +8,12 @@ clean:
 	@rm -f marketview $(INSTALL_PREFIX)/marketview
 	@# @rm -fR ~/.local/share/marketview
 	@rm -f ~/.local/share/marketview/symbols/data.db
+	@rm -f ~/.local/share/marketview/data.db
 	@echo "Clean Done"
 
 build:
-	# @go build -ldflags "-s -w" .
-	@go build  .
+	@go build -ldflags "-s -w" .
+	# @go build  .
 	@echo "Build Done"
 
 install: 
